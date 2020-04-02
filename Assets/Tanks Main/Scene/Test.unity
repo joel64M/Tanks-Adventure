@@ -3755,32 +3755,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e29574f61c003a45a3cc9a571582336, type: 3}
---- !u!1 &1324765532 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8104301651324877068, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-    type: 3}
-  m_PrefabInstance: {fileID: 8104301650273036368}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1324765533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324765532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ff1ded86ea447b69d7074425f07d68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tankMask:
-    serializedVersion: 2
-    m_Bits: 0
-  explosionParticles: {fileID: 0}
-  maxDamage: 100
-  explosionForce: 1000
-  maxLifeTime: 2
-  explosionRadius: 5
 --- !u!1 &1343158474
 GameObject:
   m_ObjectHideFlags: 0
@@ -6783,6 +6757,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1328269927, guid: 5e234f5a118fe4a58adbb2bbfd33b597, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6551048970909488332, guid: 5e234f5a118fe4a58adbb2bbfd33b597,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -6860,72 +6838,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e234f5a118fe4a58adbb2bbfd33b597, type: 3}
---- !u!1001 &8104301650273036368
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324773676, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104301651324877068, guid: e27d779b8f67c44e8b6464b1fd744bcb,
-        type: 3}
-      propertyPath: m_Name
-      value: Shell
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e27d779b8f67c44e8b6464b1fd744bcb, type: 3}
