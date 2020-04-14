@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+namespace tankTutorial { 
 public class UIDirectionalControlScript : MonoBehaviour
 {
 
@@ -24,4 +24,5 @@ public class UIDirectionalControlScript : MonoBehaviour
             transform.rotation = relativeRotation;
         }
     }
+}
 }
