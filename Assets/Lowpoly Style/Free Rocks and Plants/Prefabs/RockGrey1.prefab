@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3340812}
   - component: {fileID: 2391670}
   - component: {fileID: 6448462}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RockGrey1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
