@@ -8,29 +8,30 @@ namespace NameSpaceName {
     {
 
         #region Variables
-        //comopnents
-        TankWeapon tankWeaponScript;
-        Camera cam;
+      //public exposed
+        public LayerMask ignoreLayer;
 
-
-        //
+        
         public bool IsFire
         {
             private set;
             get;
         }
-        public Vector3 ShootPos
+        public Vector3 FirePos
         {
             private set;
             get;
         }
-    #endregion
 
-    #region Builtin Methods
+        //comopnents
+        Camera cam;
+        Vector3 hitPos;
+        #endregion
+
+        #region Builtin Methods
 
         void Awake()
         {
-            tankWeaponScript = GetComponent<TankWeapon>();
             cam = Camera.main;
 
         }
@@ -78,20 +79,25 @@ namespace NameSpaceName {
         {
             if (Input.GetMouseButton(0))
             {
-                //  tankWeaponScript.FireMissile(Input.mousePosition);
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100f))
                 {
                     //    if ((int)Mathf.Pow(2, hit.transform.gameObject.layer) == (int)layermask)
                     {
-                        Vector3 hitPos = hit.point;
+                         hitPos = hit.point;
                         hitPos.y = 0f;
+                        IsFire = true;
+                        FirePos = hitPos;
                      //   GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
                       //  go.transform.position = hitPos;
                     }
 
                 }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                IsFire = false;
             }
         }
 

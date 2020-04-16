@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace NameSpaceName {
-
+    [RequireComponent(typeof(TankInput))]
     public class TankWeapon : MonoBehaviour
     {
 
         #region Variables
-         public LayerMask layermask ;
-
+        //public exposed
+        public Transform turret;
+        public float turretDegPerSecSpeed = 60f;
+        Vector3 finalTurretDirection;
+        Vector3 turretDirectionVector;
         Camera cam;
         TankInput tankInputScript;
-        float missileFireRate = 1f;
+        public GameObject shell;
+        public Transform firePoint;
+       public float missileFireRate = 1f;
         bool canFire = true;
+        bool turretCorrect = false;
 
     #endregion
 
@@ -35,7 +41,10 @@ namespace NameSpaceName {
 
         void Update()
         {
-            
+            if (tankInputScript)
+            {
+                HandleTurret();
+            }
         }
         /*
         void FixedUpdate()
@@ -61,32 +70,44 @@ namespace NameSpaceName {
     #endregion
 
     #region Custom Methods
-        public void FireMissile(Vector3 mousePos)
+        protected virtual void FireMissile(Vector3 mousePos)
         {
-            if (canFire)
+            if (canFire && turretCorrect)
             {
-                canFire = false;
-                Invoke("ResetMissileFire", missileFireRate);
-             
-
-                // fire boom
-                //get hit world pos
-                Ray ray = cam.ScreenPointToRay(mousePos);
-                RaycastHit hit;
-                if(Physics.Raycast(ray,out hit, 100f))
-                {
-               //    if ((int)Mathf.Pow(2, hit.transform.gameObject.layer) == (int)layermask)
-                    {
-                        Vector3 hitPos = hit.point;
-                         hitPos.y = 0f;
-                        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        go.transform.position = hitPos;
-                    }
-                      
-                }
+                turretCorrect = false;
+              
             }
         }
-       void ResetMissileFire()
+        void HandleTurret()
+        {
+             turretDirectionVector = tankInputScript.FirePos- transform.position;
+            turretDirectionVector.y = 0f;
+
+            Quaternion rotation = Quaternion.LookRotation(turretDirectionVector);
+            rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.y, 0);
+            turret.rotation = Quaternion.RotateTowards(turret.rotation, rotation,turretDegPerSecSpeed * Time.deltaTime);
+            if(turretDirectionVector.normalized == turret.forward.normalized  && turretCorrect == false)
+            {
+                turretCorrect = true;
+                if (canFire )
+                {
+               
+                    canFire = false;
+                    Invoke("ResetMissileFire", missileFireRate);
+                    Instantiate(shell, firePoint.position, Quaternion.LookRotation(turret.forward));
+                
+                }
+            }
+            else
+            {
+                turretCorrect = false;
+            }
+            // finalTurretDirection = Vector3.MoveTowards(finalTurretDirection, turretDirectionVector, Time.deltaTime * turretTurnSpeed);
+            // turret.rotation = Quaternion.LookRotation(finalTurretDirection);
+            //turret.eulerAngles = Vector3.RotateTowards(turret.eulerAngles, turretDirectionVector, Time.deltaTime * turretTurnSpeed);
+
+        }
+        void ResetMissileFire()
         {
             canFire = true;
         }

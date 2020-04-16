@@ -20,7 +20,8 @@ namespace tankTutorial
         // Start is called before the first frame update
         void Start()
         {
-            Destroy(gameObject, maxLifeTime);
+            //   Destroy(gameObject, maxLifeTime);
+            explosionParticles.Play();
         }
 
         private void OnTriggerEnter(Collider other)

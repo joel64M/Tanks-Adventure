@@ -13,7 +13,6 @@ public class UIDirectionalControlScript : MonoBehaviour
     void Start()
     {
         relativeRotation = transform.parent.localRotation;
-        print(transform.parent);
     }
 
     // Update is called once per frame
