@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 namespace NameSpaceName {
 
     public class TankInput : MonoBehaviour
@@ -11,15 +11,25 @@ namespace NameSpaceName {
       //public exposed
         public LayerMask ignoreLayer;
 
-        
+        public float HorizontalInputValue
+        {
+            get;
+            protected set;
+        }
+        public float VerticalInputValue
+        {
+            get;
+            protected set;
+        }
+
         public bool IsFire
         {
-            private set;
+            protected set;
             get;
         }
         public Vector3 FirePos
         {
-            private set;
+            protected set;
             get;
         }
 
@@ -30,12 +40,10 @@ namespace NameSpaceName {
 
         #region Builtin Methods
 
-        void Awake()
+        protected virtual void  Awake()
         {
             cam = Camera.main;
-
         }
-
         void OnEnable()
         {
 
@@ -46,9 +54,11 @@ namespace NameSpaceName {
             
         }
 
-        void Update()
+      protected virtual  void Update()
         {
-            GetWeaponInput();
+            if(cam)
+            HandleFireInputs();
+            HandleMovementInputs();
         }
 
         /*
@@ -75,10 +85,12 @@ namespace NameSpaceName {
     #endregion
 
     #region Custom Methods
-        protected virtual void GetWeaponInput()
+        protected virtual void HandleFireInputs()
         {
+          
             if (Input.GetMouseButton(0))
             {
+               
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100f))
@@ -89,10 +101,7 @@ namespace NameSpaceName {
                         hitPos.y = 0f;
                         IsFire = true;
                         FirePos = hitPos;
-                     //   GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                      //  go.transform.position = hitPos;
                     }
-
                 }
             }
             if (Input.GetMouseButtonUp(0))
@@ -101,7 +110,13 @@ namespace NameSpaceName {
             }
         }
 
-    #endregion
+        protected  virtual void HandleMovementInputs()
+        {
+            VerticalInputValue = Input.GetAxis("Vertical");
+            HorizontalInputValue = Input.GetAxis("Horizontal");
+
+        }
+        #endregion
 
     }
 }

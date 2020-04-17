@@ -31,7 +31,10 @@ namespace tankTutorial
             {
 
                 Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
-
+                if (targetRigidbody.GetComponent<ShellExplosion>())
+                {
+                    continue;
+                }
                 if (!targetRigidbody)
                 {
                     continue;

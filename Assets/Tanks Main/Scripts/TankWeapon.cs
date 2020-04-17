@@ -17,22 +17,13 @@ namespace NameSpaceName {
         TankInput tankInputScript;
         public GameObject shell;
         public Transform firePoint;
-       public float missileFireRate = 1f;
+        public float missileFireRate = 1f;
         bool canFire = true;
-        bool turretCorrect = false;
+        bool isTurretRotated = true;
 
     #endregion
 
     #region Builtin Methods
-
-        void Awake()
-        {
-        }
-
-        void OnEnable()
-        {
-
-        }
 
         void Start()
         {
@@ -43,7 +34,10 @@ namespace NameSpaceName {
         {
             if (tankInputScript)
             {
-                HandleTurret();
+                if (tankInputScript.IsFire)
+                    isTurretRotated = false;
+                if (!isTurretRotated)
+                    HandleTurret();
             }
         }
         /*
@@ -70,43 +64,36 @@ namespace NameSpaceName {
     #endregion
 
     #region Custom Methods
-        protected virtual void FireMissile(Vector3 mousePos)
-        {
-            if (canFire && turretCorrect)
-            {
-                turretCorrect = false;
-              
-            }
-        }
+       
         void HandleTurret()
         {
-             turretDirectionVector = tankInputScript.FirePos- transform.position;
+            turretDirectionVector = tankInputScript.FirePos- transform.position;
             turretDirectionVector.y = 0f;
 
             Quaternion rotation = Quaternion.LookRotation(turretDirectionVector);
             rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.y, 0);
             turret.rotation = Quaternion.RotateTowards(turret.rotation, rotation,turretDegPerSecSpeed * Time.deltaTime);
-            if(turretDirectionVector.normalized == turret.forward.normalized  && turretCorrect == false)
+            if(turret.forward.normalized == turretDirectionVector.normalized && !isTurretRotated)
             {
-                turretCorrect = true;
-                if (canFire )
-                {
-               
-                    canFire = false;
-                    Invoke("ResetMissileFire", missileFireRate);
-                    Instantiate(shell, firePoint.position, Quaternion.LookRotation(turret.forward));
-                
-                }
-            }
-            else
-            {
-                turretCorrect = false;
+                isTurretRotated = true;
+                FireMissile();
             }
             // finalTurretDirection = Vector3.MoveTowards(finalTurretDirection, turretDirectionVector, Time.deltaTime * turretTurnSpeed);
             // turret.rotation = Quaternion.LookRotation(finalTurretDirection);
             //turret.eulerAngles = Vector3.RotateTowards(turret.eulerAngles, turretDirectionVector, Time.deltaTime * turretTurnSpeed);
 
         }
+
+        void FireMissile()
+        {
+            if (canFire)
+            {
+                canFire = false;
+                Invoke("ResetMissileFire", missileFireRate);
+                Instantiate(shell, firePoint.position, Quaternion.LookRotation(tankInputScript.FirePos - transform.position));
+            }
+        }
+
         void ResetMissileFire()
         {
             canFire = true;
