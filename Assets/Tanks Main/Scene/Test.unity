@@ -214,44 +214,6 @@ Transform:
   m_Father: {fileID: 2107219651}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &516480475 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1894285031334639282, guid: 4a8575f78784046d9bb93702dab6a52d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8901547874328219771}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &516480476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516480475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b6c9b98274a6452f8273ab6384e479d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  joystick: {fileID: 0}
-  buttonPressed: 0
---- !u!114 &516480477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516480475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0f34a3b5ef37464a97e73e7e38d62cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  forceMultiplier: 50
-  maxSpeed: 10
 --- !u!224 &784273959 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3881087803549984436, guid: ec536a7718376554185e4a856d5ae230,
@@ -1050,12 +1012,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128644664}
   m_CullTransparentMesh: 0
---- !u!4 &4263638665097405137 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4657806578428670634, guid: 4a8575f78784046d9bb93702dab6a52d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8901547874328219771}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7044048258766595794 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1894285031334639273, guid: 4a8575f78784046d9bb93702dab6a52d,
@@ -1134,32 +1090,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1894285031334639281, guid: 4a8575f78784046d9bb93702dab6a52d,
-        type: 3}
-      propertyPath: shell
-      value: 
-      objectReference: {fileID: 7743992825534616066, guid: 0ecbfb02a6a434446891ebb8ffa98144,
-        type: 3}
-    - target: {fileID: 1894285031334639281, guid: 4a8575f78784046d9bb93702dab6a52d,
-        type: 3}
-      propertyPath: firePoint
-      value: 
-      objectReference: {fileID: 4263638665097405137}
-    - target: {fileID: 1894285031334639281, guid: 4a8575f78784046d9bb93702dab6a52d,
-        type: 3}
-      propertyPath: turretDegPerSecSpeed
-      value: 900
-      objectReference: {fileID: 0}
-    - target: {fileID: 1894285031334639281, guid: 4a8575f78784046d9bb93702dab6a52d,
-        type: 3}
-      propertyPath: missileFireRate
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1894285031334639282, guid: 4a8575f78784046d9bb93702dab6a52d,
         type: 3}
       propertyPath: m_Name
       value: TankPlayer
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1894285031334639280, guid: 4a8575f78784046d9bb93702dab6a52d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a8575f78784046d9bb93702dab6a52d, type: 3}

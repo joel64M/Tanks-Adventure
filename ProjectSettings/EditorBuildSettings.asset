@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/Test.unity
+    guid: 198631fb0501841b2b5e602bc7bcec07
   m_configObjects: {}
