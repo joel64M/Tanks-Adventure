@@ -36,7 +36,7 @@ namespace NameSpaceName {
             {
                 if (tankInputScript.IsFire)
                     isTurretRotated = false;
-                if (!isTurretRotated)
+              //  if (!isTurretRotated)
                     HandleTurret();
             }
         }

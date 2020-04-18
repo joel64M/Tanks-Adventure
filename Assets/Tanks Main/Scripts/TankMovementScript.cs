@@ -21,11 +21,7 @@ namespace tankTutorial
         float turnInputValue;
 
 
-        [Header("Audio Properties")]
-        public AudioSource movementAudioSource;
-        public AudioClip engineIdle;
-        public AudioClip engineRunning;
-        float originalPitch;
+      
         public float pitchRange = 0.2f;
 
 
@@ -36,7 +32,6 @@ namespace tankTutorial
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            originalPitch = movementAudioSource.pitch;
 
 
         }
@@ -46,7 +41,6 @@ namespace tankTutorial
         {
             movementInputValue = Input.GetAxis("Vertical");
             turnInputValue = Input.GetAxis("Horizontal");
-            EngineAudio();
         }
 
         void FixedUpdate()
@@ -65,28 +59,7 @@ namespace tankTutorial
             Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
             rb.MoveRotation(transform.rotation * turnRotation);
         }
-        void EngineAudio()
-        {
-            if (Mathf.Abs(movementInputValue) < 0.1f && Mathf.Abs(turnInputValue) < 0.1f)
-            {
-                if (movementAudioSource.clip == engineRunning)
-                {
-                    movementAudioSource.clip = engineIdle;
-                    movementAudioSource.pitch = Random.Range(originalPitch - pitchRange, originalPitch + pitchRange);
-                    movementAudioSource.Play();
-                }
-            }
-            else
-            {
-                if (movementAudioSource.clip == engineIdle)
-                {
-                    movementAudioSource.clip = engineRunning;
-                    movementAudioSource.pitch = Random.Range(originalPitch - pitchRange, originalPitch + pitchRange);
-                    movementAudioSource.Play();
-                }
-            }
-        }
-
+   
         void MoveViaForce()
         {
             // Vector2 ip = new Vector2(Joystick)

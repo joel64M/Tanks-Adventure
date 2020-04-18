@@ -684,6 +684,27 @@ MonoBehaviour:
   lookAtTarget: 0
   clampX: 10
   clampZ: 17
+--- !u!1 &1810082703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1894285031334639282, guid: 4a8575f78784046d9bb93702dab6a52d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8901547874328219771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1810082704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810082703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba33e54d57ee74c968e96103bfdcce83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2002850158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1046,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 516480477, guid: 4a8575f78784046d9bb93702dab6a52d, type: 3}
+      propertyPath: turnSpeed
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 516480477, guid: 4a8575f78784046d9bb93702dab6a52d, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1894285031048250883, guid: 4a8575f78784046d9bb93702dab6a52d,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1090,10 +1119,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1894285031334639281, guid: 4a8575f78784046d9bb93702dab6a52d,
+        type: 3}
+      propertyPath: turretDegPerSecSpeed
+      value: 99999
+      objectReference: {fileID: 0}
     - target: {fileID: 1894285031334639282, guid: 4a8575f78784046d9bb93702dab6a52d,
         type: 3}
       propertyPath: m_Name
       value: TankPlayer
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 516480476, guid: 4a8575f78784046d9bb93702dab6a52d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4a8575f78784046d9bb93702dab6a52d, type: 3}

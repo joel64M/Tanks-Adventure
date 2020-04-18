@@ -9,15 +9,22 @@ namespace NameSpaceName {
     {
 
         #region Variables
-        public VariableJoystick joystick;
+      
 
-        Touch uiTouch;
-        Touch fireTouch;
+        //temporary
+        public bool isfiree;
 
+        //components
+        VariableJoystick joystick;
+
+        [Header("Touch Struct")]
+        [SerializeField] List<TouchhStruct> TouchStructList = new List<TouchhStruct>();
+        [System.Serializable] struct TouchhStruct { public bool ignoreIt; public Touch touch; }
         #endregion
 
+
         #region Builtin Methods
-   
+
         protected override void Awake()
         {
             base.Awake();
@@ -33,21 +40,25 @@ namespace NameSpaceName {
 
         #region Custom Methods
 
-        public bool isjOysetick;
-        public float joyval;
-        bool IsJoystickPressed()
-        {
-            if(Mathf.Abs( joystick.Horizontal)>0.01f || Mathf.Abs(joystick.Vertical) > 0.01f)
-            {
-                isjOysetick = true;
-                return true;
-            }
-            else
-            {
-                isjOysetick = false;
-                return false;
-            }
-        }
+        /*
+     public bool isjOysetick;
+     public float joyval;
+
+     bool IsJoystickPressed()
+     {
+         if(Mathf.Abs( joystick.Horizontal)>0.01f || Mathf.Abs(joystick.Vertical) > 0.01f)
+         {
+             isjOysetick = true;
+             return true;
+         }
+         else
+         {
+             isjOysetick = false;
+             return false;
+         }
+     }
+     */
+
         protected override void HandleMovementInputs()
         {
             // base.HandleMovementInputs();
@@ -57,223 +68,96 @@ namespace NameSpaceName {
                 HorizontalInputValue = joystick.Horizontal;
             }
         }
-        /*
-      public  int touchX=0;
-        bool lockuiTouch = false;
-        int uiNo;
-        int fireNo;
-        bool lockfireTouch = false;
-        void TouchSystem()
-        {
-
-           if (Input.touchCount > 0)
-            {
-                if (IsPointerOverUIObject() && !lockuiTouch)
-                {
-                    lockuiTouch = true;
-                    uiTouch = Input.GetTouch(touchX);
-                    uiNo = touchX;
-                    touchX++;
-                }
-                if(lockuiTouch)
-                uiTouch = Input.GetTouch(uiNo);
-
-                if (lockuiTouch)
-                {
-                    if (uiTouch.phase == TouchPhase.Began || uiTouch.phase == TouchPhase.Moved)
-                    {
-                     //   print("hhgkj");
-                    }
-                    else if( uiTouch.phase == TouchPhase.Ended)
-                    {
-                      //  print("moh");
-                        touchX--;
-                        lockuiTouch = false;
-                    }
-
-                }
-                if (Input.touchCount >= 1 || (Input.touchCount==2 && lockuiTouch ) )
-                {
-                    if (!IsPointerOverUIObject() && !lockfireTouch)
-                    {
-                        lockfireTouch = true;
-                        fireTouch = Input.GetTouch(touchX);
-                        fireNo = touchX;
-                        touchX++;
-                    }
-                  
-                }
-                if (lockfireTouch)
-                    fireTouch = Input.GetTouch(fireNo);
-                if (lockfireTouch)
-                if (fireTouch.phase == TouchPhase.Began || fireTouch.phase == TouchPhase.Moved)
-                {
-                        FireClick();
-                }
-                else if (fireTouch.phase == TouchPhase.Ended)
-                {
-                    touchX--;
-                        IsFire = false;
-                    lockfireTouch = false;
-                }
-            }
-            
-        
-        
-        }
-        */
-       public int touchID;
+     
         protected override void HandleFireInputs()
         {
-            joyval = Mathf.Abs(joystick.Horizontal) + Mathf.Abs(joystick.Vertical);
-
-            /*
-           
-           if (Input.touchCount> 0)
-           {
-                if (IsPointerOverUIObject())
-                {
-                    count++;
-                }
-
-
-                if (!IsJoystickPressed())
-                {
-
-                }
-                if(Input.touchCount>0 && !IsJoystickPressed())
-                {
-                    touchID = 0;
-
-                }else if (Input.touchCount==2 && IsJoystickPressed())
-                {
-                    touchID
-                }
-
-                if(!IsJoystickPressed())
-              
-                
-               if (IsJoystickPressed() ) //Input.touchCount >1
-                {
-
-                    // fireTouch = Input.GetTouch(1);
-                    if (!IsFire && touchID == 0)
-                        touchID = 1;
-                    else
-                        touchID = 0;
-                  //  FireClick();
-
-
-               11111
-               }
-
-               if(!IsJoystickPressed())
-               {
-                    //   fireTouch = Input.GetTouch(0);
-
-                    touchID = 0;
-                  //  FireClick();
-               }
-               
-                if (Input.touchCount > touchID)
-                {
-                    fireTouch = Input.GetTouch(touchID);
-                    FireClick();
-                }
-             
-
-            }
-    */
-
 
             if (Input.touchCount > 0)
             {
-              //  Touch[] TOUCHES = Input.touches;
                 for (int i = 0; i < Input.touchCount; i++)
                 {
-                    Toucher t = new Toucher();
+                    TouchhStruct t = new TouchhStruct();
                     t.ignoreIt = false;
-                    //t.ID = Input.GetTouch(i).fingerId;
                     t.touch = Input.GetTouch(i);
-                    print(i);
-                    if (!IsPointerOverUIObject(Input.GetTouch(i).position))
+                    if (!IsPointerOverUIObject(Input.GetTouch(i),i))
                     {
                         t.ignoreIt = false;
                     }
-                    else if (IsPointerOverUIObject(Input.GetTouch(i).position))
+                    else //if (IsPointerOverUIObject(Input.GetTouch(i),i))
                     {
                         t.ignoreIt = true;
                     }
-                  //  if(kkk.Count > 0)
-                    {
-                        if(kkk.Count>0)
-                        {
-                            if (!kkk.Any(dd => dd.touch.fingerId == Input.GetTouch(i).fingerId))
+                    
+                            if(TouchStructList.Count>0)
                             {
-                                kkk.Add(t);
+                                 /*
+                                if (!kkk.Any(dd => dd.touch.fingerId == Input.GetTouch(i).fingerId))
+                                {
+                                    kkk.Add(t);
+                                }
+                                */
+                                bool isThere=false;
+                                foreach (var item in TouchStructList)
+                                {
+                                    if ( item.touch.fingerId == Input.GetTouch(i).fingerId)
+                                    {
+                                    isThere = true;
+                                    }
 
+                                }
+                                if (!isThere)
+                                {
+                                    TouchStructList.Add(t);
+                                }
                             }
-                        }
-                        else
-                        {
-                            kkk.Add(t);
-                        }
+                            else
+                            {
+                                TouchStructList.Add(t);
+                            }
                         if (Input.GetTouch(i).phase == TouchPhase.Began || Input.GetTouch(i).phase == TouchPhase.Moved)
                         {
-                            if(!kkk.Any(oi => (oi.ignoreIt == true) && oi.touch.fingerId == Input.GetTouch(i).fingerId))
+                           /*
+                                if(!kkk.Any(oi => (oi.ignoreIt == true) && oi.touch.fingerId == Input.GetTouch(i).fingerId))
+                                {
+                                   // IsFire = true;
+                                     // FireClick(Input.GetTouch(i).position);
+                                    isfiree = true;
+                                }
+                            */
+                             bool isThere = false;
+                            foreach (var item in TouchStructList)
                             {
-                                isfiree = true;
-
+                                if (item.ignoreIt == false && item.touch.fingerId == Input.GetTouch(i).fingerId)
+                                {
+                                isThere = true;
+                                }
                             }
-                            //if (!kkk[i].ignoreIt) 
+                            if (isThere)
                             {
-                               // isfiree = true;
+                            FindFirePos(Input.GetTouch(i).position);
+                            isfiree = true;
                             }
                         }
 
                         if (Input.GetTouch(i).phase == TouchPhase.Ended || Input.GetTouch(i).phase == TouchPhase.Canceled)
                         {
-                            if (!kkk.Any(oi => (oi.ignoreIt == true) && oi.touch.fingerId == Input.GetTouch(i).fingerId))
+                            if (!TouchStructList.Any(oi => (oi.ignoreIt == true) && oi.touch.fingerId == Input.GetTouch(i).fingerId))
                             {
                                 IsFire = false;
                                 isfiree = false;
                             }
-                               // if (!kkk[i].ignoreIt)
-                            {
-                              //  IsFire = false;
-                            //    isfiree = false;
-
-                            }
-                           // int j = i-1;
-                            kkk.RemoveAll(oi => oi.touch.fingerId == Input.GetTouch(i).fingerId);
-                            if (i > 1)
-                            {
-                               // kkk.Find(ol => ol.ID == j).ID = j;
-                                //  kkk[(j)].ID = j;
-                               // Toucher oo = kkk.Where(lol => (lol.ID == j))  as Toucher;
-                              //  kkk[j].ID =
-                            }
+                            TouchStructList.RemoveAll(oi => oi.touch.fingerId == Input.GetTouch(i).fingerId);
                         }
-
-
-                    }
-                 
                 }
-            //    FireClick();
-
             }
         }
-        public bool isfiree;
-     [SerializeField] List<Toucher> kkk = new List<Toucher>();
-        [System.Serializable] class Toucher {public bool ignoreIt; public Touch touch; }
 
-        void FireClick()
+
+        protected override void FindFirePos  (Vector2 mousePos)
         {
-            if (fireTouch.phase == TouchPhase.Began || fireTouch.phase == TouchPhase.Moved)
-            {
-                isfiree = true;
+                //  base.FindFirePos();
                 Vector3 hitPos;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = cam.ScreenPointToRay(mousePos);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100f))
                 {
@@ -281,24 +165,60 @@ namespace NameSpaceName {
                     {
                         hitPos = hit.point;
                         hitPos.y = 0f;
-                        IsFire = true;
                         FirePos = hitPos;
                     }
                 }
-            }
-            else if (fireTouch.phase == TouchPhase.Ended)
-            {
-                IsFire = false;
-                isfiree = false;
-            }
         }
-        private bool IsPointerOverUIObject(Vector2 vec)
+
+        private bool IsPointerOverUIObject(Touch touch,int i)
         {
-            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-            eventDataCurrentPosition.position = new Vector2(vec.x, vec.y);
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-            return results.Count > 0;
+            bool boo= false;
+            if ( TouchStructList.Count>0 && i <TouchStructList.Count)
+            {
+                foreach (var item in TouchStructList)
+                {
+                    if(item.ignoreIt == false && item.touch.fingerId == touch.fingerId)
+                    {
+                        boo =  false;
+                    }
+                    else
+                    {
+                        boo =  true;
+                    }
+                }
+                return boo;
+                     
+                /*
+                if (!kkk.Any(oi => (oi.ignoreIt == true) && oi.touch.fingerId == touch.fingerId))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                */
+               
+            }
+            else
+            {
+
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(i).fingerId))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+                 //   PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+                //    eventDataCurrentPosition.position = new Vector2(touch.position.x, touch.position.y);
+                //    List<RaycastResult> results = new List<RaycastResult>();
+                //    EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+                //    return results.Count > 0;
+            }
+         
         }
         #endregion
 

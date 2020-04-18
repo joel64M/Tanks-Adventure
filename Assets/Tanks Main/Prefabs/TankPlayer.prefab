@@ -5077,7 +5077,8 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
-  joystick: {fileID: 0}
+  isfiree: 0
+  TouchStructList: []
 --- !u!114 &516480477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5093,6 +5094,10 @@ MonoBehaviour:
   moveSpeed: 5
   forceMultiplier: 50
   maxSpeed: 10
+  movementAudioSource: {fileID: 1894285031334639275}
+  engineIdle: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
+  engineRunning: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
+  addPitch: 0.2
 --- !u!1 &1894285031394135369
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ namespace NameSpaceName {
         }
 
         //comopnents
-        Camera cam;
+       protected Camera cam;
         Vector3 hitPos;
         #endregion
 
@@ -44,15 +44,7 @@ namespace NameSpaceName {
         {
             cam = Camera.main;
         }
-        void OnEnable()
-        {
-
-        }
-
-        void Start()
-        {
-            
-        }
+      
 
       protected virtual  void Update()
         {
@@ -82,40 +74,47 @@ namespace NameSpaceName {
 
         }
         */
-    #endregion
+        #endregion
 
-    #region Custom Methods
-        protected virtual void HandleFireInputs()
-        {
-          
-            if (Input.GetMouseButton(0))
-            {
-               
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100f))
-                {
-                    //    if ((int)Mathf.Pow(2, hit.transform.gameObject.layer) == (int)layermask)
-                    {
-                         hitPos = hit.point;
-                        hitPos.y = 0f;
-                        IsFire = true;
-                        FirePos = hitPos;
-                    }
-                }
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                IsFire = false;
-            }
-        }
+        #region Custom Methods
 
-        protected  virtual void HandleMovementInputs()
+        protected virtual void HandleMovementInputs()
         {
             VerticalInputValue = Input.GetAxis("Vertical");
             HorizontalInputValue = Input.GetAxis("Horizontal");
 
         }
+
+        protected virtual void HandleFireInputs()
+        {
+          
+            if (Input.GetMouseButton(0))
+            {
+                IsFire = true;
+             
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                IsFire = false;
+            }
+            FindFirePos(Input.mousePosition);
+        }
+
+        protected virtual void FindFirePos(Vector2 mousePos)
+        {
+            Ray ray = cam.ScreenPointToRay(mousePos);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100f))
+            {
+                //if ((int)Mathf.Pow(2, hit.transform.gameObject.layer) == (int)layermask)
+                {
+                    hitPos = hit.point;
+                    hitPos.y = 0f;
+                    FirePos = hitPos;
+                }
+            }
+        }
+
         #endregion
 
     }
