@@ -9,25 +9,41 @@ namespace NameSpaceName {
 
         #region Variables
         //public exposed
+        [Header("Turret Propeties")]
         public Transform turret;
+        public Transform firePoint;
         public float turretDegPerSecSpeed = 60f;
+        //missile properties
+        public float missileFireRate = 1f;
+        public GameObject missileShell;
+        public Transform missileParent;
+
+        //audio
+        [Header("Audio Properties")]
+        public AudioSource fireAudio;
+        public AudioClip fireClip;
+
+        //private
         Vector3 finalTurretDirection;
         Vector3 turretDirectionVector;
-        Camera cam;
-        TankInput tankInputScript;
-        public GameObject shell;
-        public Transform firePoint;
-        public float missileFireRate = 1f;
+
         bool canFire = true;
         bool isTurretRotated = true;
 
-    #endregion
+        //components
+        Camera cam;
+        TankInput tankInputScript;
 
-    #region Builtin Methods
+        #endregion
+
+        #region Builtin Methods
 
         void Start()
         {
             tankInputScript = GetComponent<TankInput>();
+            GameObject go = new GameObject("Missile Parent");
+            go.transform.position = Vector3.zero;
+            missileParent = go.transform;
         }
 
         void Update()
@@ -36,43 +52,28 @@ namespace NameSpaceName {
             {
                 if (tankInputScript.IsFire)
                     isTurretRotated = false;
-              //  if (!isTurretRotated)
+              //if (!isTurretRotated)
                     HandleTurret();
             }
         }
-        /*
-        void FixedUpdate()
-        {
-            
-        }
 
-        void LateUpdate()
-        {
-
-        }
-
-        void OnDisable()
-        {
-
-        }
-
-        void Destroy()
-        {
-
-        }
-        */
+      
     #endregion
 
     #region Custom Methods
        
         void HandleTurret()
         {
+            //calculate direction to the firepos
             turretDirectionVector = tankInputScript.FirePos- transform.position;
             turretDirectionVector.y = 0f;
 
+            //convert to quaternion
             Quaternion rotation = Quaternion.LookRotation(turretDirectionVector);
             rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.y, 0);
+
             turret.rotation = Quaternion.RotateTowards(turret.rotation, rotation,turretDegPerSecSpeed * Time.deltaTime);
+
             if(turret.forward.normalized == turretDirectionVector.normalized && !isTurretRotated)
             {
                 isTurretRotated = true;
@@ -81,7 +82,6 @@ namespace NameSpaceName {
             // finalTurretDirection = Vector3.MoveTowards(finalTurretDirection, turretDirectionVector, Time.deltaTime * turretTurnSpeed);
             // turret.rotation = Quaternion.LookRotation(finalTurretDirection);
             //turret.eulerAngles = Vector3.RotateTowards(turret.eulerAngles, turretDirectionVector, Time.deltaTime * turretTurnSpeed);
-
         }
 
         void FireMissile()
@@ -89,12 +89,13 @@ namespace NameSpaceName {
             if (canFire)
             {
                 canFire = false;
-                Invoke("ResetMissileFire", missileFireRate);
-                Instantiate(shell, firePoint.position, Quaternion.LookRotation(tankInputScript.FirePos - transform.position));
+                Invoke("ResetMissileFireRate", missileFireRate);
+                fireAudio.Play();
+                Instantiate(missileShell, firePoint.position, Quaternion.LookRotation(tankInputScript.FirePos - transform.position),missileParent);
             }
         }
 
-        void ResetMissileFire()
+        void ResetMissileFireRate()
         {
             canFire = true;
         }

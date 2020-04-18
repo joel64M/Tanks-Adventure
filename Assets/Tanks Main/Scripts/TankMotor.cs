@@ -9,11 +9,15 @@ namespace NameSpaceName {
     {
 
         #region Variables
+        [Header("Control Choice")]
+        [SerializeField] bool moveByForce = true;
+        
         [Header("Motor Properties")]
         public float moveSpeed = 5f;
         public float forceMultiplier = 50f;
         public float maxSpeed = 10f;
         public float turnSpeed = 10f;
+
         [Header("Audio Properties")]
         public AudioSource movementAudioSource;
         public AudioClip engineIdle;
@@ -33,26 +37,21 @@ namespace NameSpaceName {
             tankInputScript = GetComponent<TankInput>();
             rb = GetComponent<Rigidbody>();
             originalPitch = movementAudioSource.pitch;
-
-        }
-
-        void OnEnable()
-        {
-
-        }
-
-        void Start()
-        {
-            
         }
 
         void Update()
         {
             if (rb)
             {
-                 MoveByForce();
-               // Move();
-               // Turn();
+                if (moveByForce)
+                {
+                    MoveByForce();
+                }
+                else
+                {
+                     Move();
+                     Turn();
+                }
             }
             if (movementAudioSource)
             {
@@ -84,17 +83,20 @@ namespace NameSpaceName {
 
         #region Custom Methods
 
+
         void Move()
         {
             Vector3 movement = transform.forward * tankInputScript.VerticalInputValue * moveSpeed * Time.deltaTime;
             rb.MovePosition(transform.position + movement);
         }
+
         void Turn()
         {
             float turn = tankInputScript.HorizontalInputValue * turnSpeed * Time.deltaTime;
             Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
             rb.MoveRotation(transform.rotation * turnRotation);
         }
+
         void MoveByForce()
         {
             // Vector2 ip = new Vector2(Joystick)
@@ -114,7 +116,7 @@ namespace NameSpaceName {
                 {
                     movementAudioSource.clip = engineIdle;
                     movementAudioSource.pitch = originalPitch;  // Random.Range(originalPitch - pitchRange, originalPitch + pitchRange);
-                    movementAudioSource.Play();
+                 //   movementAudioSource.Play();
                 }
             }
             else

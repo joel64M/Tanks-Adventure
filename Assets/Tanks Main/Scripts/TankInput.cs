@@ -9,8 +9,10 @@ namespace NameSpaceName {
 
         #region Variables
       //public exposed
-        public LayerMask ignoreLayer;
+        ///public LayerMask ignoreLayer;
 
+
+            //read only inputs
         public float HorizontalInputValue
         {
             get;
@@ -21,7 +23,6 @@ namespace NameSpaceName {
             get;
             protected set;
         }
-
         public bool IsFire
         {
             protected set;
@@ -34,7 +35,7 @@ namespace NameSpaceName {
         }
 
         //comopnents
-       protected Camera cam;
+        protected Camera cam;
         Vector3 hitPos;
         #endregion
 
@@ -44,36 +45,14 @@ namespace NameSpaceName {
         {
             cam = Camera.main;
         }
-      
 
-      protected virtual  void Update()
+        protected virtual  void Update()
         {
             if(cam)
             HandleFireInputs();
             HandleMovementInputs();
         }
 
-        /*
-        void FixedUpdate()
-        {
-            
-        }
-
-        void LateUpdate()
-        {
-
-        }
-
-        void OnDisable()
-        {
-
-        }
-
-        void Destroy()
-        {
-
-        }
-        */
         #endregion
 
         #region Custom Methods

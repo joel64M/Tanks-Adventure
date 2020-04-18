@@ -7,10 +7,7 @@ namespace NameSpaceName {
 
     public class MobileTankInput : TankInput
     {
-
         #region Variables
-      
-
         //temporary
         public bool isfiree;
 
@@ -29,11 +26,6 @@ namespace NameSpaceName {
         {
             base.Awake();
             joystick = GameObject.FindGameObjectWithTag("JoyStick").GetComponent<VariableJoystick>();
-        }
-
-        protected override void Update()
-        {
-            base.Update();
         }
 
         #endregion
@@ -151,7 +143,6 @@ namespace NameSpaceName {
                 }
             }
         }
-
 
         protected override void FindFirePos  (Vector2 mousePos)
         {
