@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace NameSpaceName {
 
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(BoxCollider))]
     [RequireComponent(typeof(TankInput))]
     public class TankMotor : MonoBehaviour
     {

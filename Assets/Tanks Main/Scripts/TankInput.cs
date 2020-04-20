@@ -83,7 +83,7 @@ namespace NameSpaceName {
         {
             Ray ray = cam.ScreenPointToRay(mousePos);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100f))
+            if (Physics.Raycast(ray, out hit, 1000f))
             {
                 //if ((int)Mathf.Pow(2, hit.transform.gameObject.layer) == (int)layermask)
                 {

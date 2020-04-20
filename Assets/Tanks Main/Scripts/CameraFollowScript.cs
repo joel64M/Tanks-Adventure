@@ -51,8 +51,8 @@ namespace tankTutorial
                 //  wantedPosition.x = transform.position.x;
 
                 Vector3 tempPos = Vector3.SmoothDamp(transform.position, wantedPosition, ref currentVelocity, smoothTime);
-                tempPos.x = Mathf.Clamp(tempPos.x, -clampX, clampX);
-                tempPos.z = Mathf.Clamp(tempPos.z, -clampZ, clampZ);
+      //          tempPos.x = Mathf.Clamp(tempPos.x, -clampX, clampX);
+             //   tempPos.z = Mathf.Clamp(tempPos.z, -clampZ, clampZ);
 
                 transform.position = tempPos;
                 if (lookAtTarget)
