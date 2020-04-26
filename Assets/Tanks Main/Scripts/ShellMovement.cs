@@ -6,6 +6,7 @@ namespace NameSpaceName {
 
     public class ShellMovement : MonoBehaviour
     {
+        public static bool isBook;
 
         #region Variables
         public float speed;
@@ -22,22 +23,15 @@ namespace NameSpaceName {
         void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            isBook = true;
         }
 
         void OnEnable()
         {
             initialPos = transform.position;
             moveShell = true;
-        }
-
-        void Start()
-        {
-            
-        }
-
-        void Update()
-        {
-            
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         void FixedUpdate()
@@ -47,27 +41,20 @@ namespace NameSpaceName {
                 MoveShell();
             }
         }
-
-        /*
-        void LateUpdate()
+        private void OnTriggerEnter(Collider other)
         {
-
+            StopShellMovement();
         }
-
-        void OnDisable()
-        {
-
-        }
-
-        void Destroy()
-        {
-
-        }
-        */
         #endregion
 
         #region Custom Methods
-        private void StopShell()
+        void StopShellMovement()
+        {
+            moveShell = false;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
+
+        private void ShellDropDown()
         {
             rb.constraints = RigidbodyConstraints.None;
         }
@@ -77,7 +64,7 @@ namespace NameSpaceName {
             rb.MovePosition(rb.position + transform.forward * Time.deltaTime * speed);
             if (distCovered > range)
             {
-                StopShell();
+                ShellDropDown();
             }
         }
         #endregion

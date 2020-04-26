@@ -13,7 +13,8 @@ namespace NameSpaceName {
         #region Variables
         [Header("Control Choice")]
         [SerializeField] bool moveByForce = true;
-        
+        [SerializeField] bool isAudio = true;
+
         [Header("Motor Properties")]
         public float moveSpeed = 5f;
         public float forceMultiplier = 50f;
@@ -39,6 +40,7 @@ namespace NameSpaceName {
             tankInputScript = GetComponent<TankInput>();
             rb = GetComponent<Rigidbody>();
             originalPitch = movementAudioSource.pitch;
+            
         }
 
         void Update()
@@ -55,8 +57,10 @@ namespace NameSpaceName {
                      Turn();
                 }
             }
+            if(isAudio)
             if (movementAudioSource)
             {
+
                 EngineAudio();
             }
         }

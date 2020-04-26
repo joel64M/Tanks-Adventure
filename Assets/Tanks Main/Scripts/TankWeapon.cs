@@ -16,11 +16,11 @@ namespace NameSpaceName {
         //missile properties
         public float missileFireRate = 1f;
         public GameObject missileShell;
-        public Transform missileParent;
+         Transform missileParent;
 
         //audio
         [Header("Audio Properties")]
-        public AudioSource fireAudio;
+        [SerializeField] AudioSource fireAudio;
         public AudioClip fireClip;
 
         //private
@@ -33,7 +33,6 @@ namespace NameSpaceName {
         //components
         Camera cam;
         TankInput tankInputScript;
-
         #endregion
 
         #region Builtin Methods
@@ -41,9 +40,8 @@ namespace NameSpaceName {
         void Start()
         {
             tankInputScript = GetComponent<TankInput>();
-            GameObject go = new GameObject("Missile Parent");
-            go.transform.position = Vector3.zero;
-            missileParent = go.transform;
+            CreateMissileParent();
+            CreateMissilePool();
         }
 
         void Update()
@@ -91,7 +89,7 @@ namespace NameSpaceName {
                 canFire = false;
                 Invoke("ResetMissileFireRate", missileFireRate);
                 fireAudio.Play();
-                Instantiate(missileShell, firePoint.position, Quaternion.LookRotation(tankInputScript.FirePos - transform.position),missileParent);
+                GetMissileFromPool();
             }
         }
 
@@ -99,7 +97,50 @@ namespace NameSpaceName {
         {
             canFire = true;
         }
-       
+
+        void CreateMissileParent()
+        {
+            GameObject go = new GameObject("Missile Parent");
+            go.transform.position = Vector3.zero;
+            missileParent = go.transform;
+        }
+
+        [SerializeField] int missileAmount = 40;
+        int missileIndex=0;
+        List<GameObject> missilePool = new List<GameObject>();
+
+        void GetMissileFromPool()
+        {
+            if (missilePool[missileIndex].activeSelf)
+            {
+                CreateSingleMissile();
+                missileIndex = missileAmount;
+                missileAmount++;
+            }
+            missilePool[missileIndex].transform.position = firePoint.position;
+            missilePool[missileIndex].transform.rotation = Quaternion.LookRotation(tankInputScript.FirePos - transform.position);
+            missilePool[missileIndex].SetActive(true);
+            missileIndex++;
+            if (missileIndex >= missileAmount)
+            {
+                missileIndex = 0;
+            }
+        }
+
+        void CreateMissilePool()
+        {
+            for (int i = 0; i < missileAmount; i++)
+            {
+                CreateSingleMissile();
+            }
+        }
+        void CreateSingleMissile()
+        {
+            // Instantiate(missileShell, firePoint.position, Quaternion.LookRotation(tankInputScript.FirePos - transform.position),missileParent);
+            GameObject go = Instantiate(missileShell, Vector3.zero, Quaternion.identity, missileParent);
+            go.SetActive(false);
+            missilePool.Add(go);
+        }
     #endregion
 
     }

@@ -8,11 +8,10 @@ namespace NameSpaceName {
     {
 
         #region Variables
-      //public exposed
+        //public exposed
         ///public LayerMask ignoreLayer;
+         //read only inputs
 
-
-            //read only inputs
         public float HorizontalInputValue
         {
             get;
@@ -61,16 +60,13 @@ namespace NameSpaceName {
         {
             VerticalInputValue = Input.GetAxis("Vertical");
             HorizontalInputValue = Input.GetAxis("Horizontal");
-
         }
 
         protected virtual void HandleFireInputs()
         {
-          
             if (Input.GetMouseButton(0))
             {
                 IsFire = true;
-             
             }
             if (Input.GetMouseButtonUp(0))
             {

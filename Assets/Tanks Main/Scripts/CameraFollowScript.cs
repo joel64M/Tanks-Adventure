@@ -15,9 +15,8 @@ namespace tankTutorial
         public float clampX = 10f;
         public float clampZ = 15f;
         Vector3 offset, wantedPosition;
-
+        public Vector3 off;
         private Vector3 currentVelocity;
-
         #endregion
 
 
@@ -26,7 +25,6 @@ namespace tankTutorial
         void Start()
         {
             CalculateOffset();
-
         }
 
         // Update is called once per frame
@@ -40,7 +38,7 @@ namespace tankTutorial
         #region Custom Methods
         void CalculateOffset()
         {
-            offset = target.position + transform.position;
+            offset = transform.position - target.position ;
         }
 
         protected virtual void HandleCamera()

@@ -15,13 +15,24 @@ namespace tankTutorial
         public float explosionForce = 1000f;
         public float maxLifeTime = 2f;
         public float explosionRadius = 5f;
+
+        MeshRenderer mr;
+
         #endregion
 
         // Start is called before the first frame update
+
+        private void OnEnable()
+        {
+            mr = GetComponent<MeshRenderer>();
+            mr.enabled = true;
+            explosionParticles.Play();
+
+        }
+
         void Start()
         {
             //   Destroy(gameObject, maxLifeTime);
-            explosionParticles.Play();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -55,7 +66,7 @@ namespace tankTutorial
 
             }
             // Unparent the particles from the shell.
-            explosionParticles.transform.parent = null;
+          //  explosionParticles.transform.parent = null;
 
             // Play the particle system.
             explosionParticles.Play();
@@ -64,12 +75,15 @@ namespace tankTutorial
             explosionAudio.Play();
 
             // Once the particles have finished, destroy the gameobject they are on.
-            Destroy(explosionParticles.gameObject, explosionParticles.main.duration);
-
-            // Destroy the shell.
-            Destroy(gameObject);
+            Invoke("HideShell", explosionParticles.main.duration);
+            mr.enabled = false;
+            // Destroy the shell.dd
+          //  Destroy(gameObject);
         }
-
+        void HideShell()
+        {
+            gameObject.SetActive(false);
+        }
         float CalculateDamage(Vector3 targetPosition)
         {
             // Create a vector from the shell to the target.
