@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace tankTutorial
+namespace NameSpaceName
 {
     public class ShellExplosion : MonoBehaviour
     {
@@ -11,10 +11,10 @@ namespace tankTutorial
         public LayerMask tankMask;
         public ParticleSystem explosionParticles;
         public AudioSource explosionAudio;
-        public float maxDamage = 100f;
-        public float explosionForce = 1000f;
-        public float maxLifeTime = 2f;
-        public float explosionRadius = 5f;
+        public float maxDamage = 10f;
+     //   public float explosionForce = 1000f;
+       // public float maxLifeTime = 2f;
+       // public float explosionRadius = 5f;
 
         MeshRenderer mr;
 
@@ -37,36 +37,41 @@ namespace tankTutorial
 
         private void OnTriggerEnter(Collider other)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, tankMask);
-            for (int i = 0; i < colliders.Length; i++)
-            {
 
-                Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
-                if (targetRigidbody.GetComponent<ShellExplosion>())
-                {
-                    continue;
-                }
-                if (!targetRigidbody)
-                {
-                    continue;
-                }
-                targetRigidbody.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            /*
 
-                // Find the TankHealth script associated with the rigidbody.
-                TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth>();
-                if (!targetHealth)
-                {
-                    continue;
-                }
-                float damage = CalculateDamage(targetRigidbody.position);
+             Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, tankMask);
+             for (int i = 0; i < colliders.Length; i++)
+             {
 
-                // Deal this damage to the tank.
-                targetHealth.TakeDamage(damage);
+                 Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
+                 if (targetRigidbody.GetComponent<ShellExplosion>())
+                 {
+                     continue;
+                 }
+                 if (!targetRigidbody)
+                 {
+                     continue;
+                 }
+                // targetRigidbody.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+
+                 // Find the TankHealth script associated with the rigidbody.
+ //                TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth>();
+                // if (!targetHealth)
+                 {
+                  //   continue;
+                 }
+                 float damage = CalculateDamage(targetRigidbody.position);
+
+                 // Deal this damage to the tank.
+               //  targetHealth.TakeDamage(damage);
 
 
-            }
+             }
+               */
+
             // Unparent the particles from the shell.
-          //  explosionParticles.transform.parent = null;
+            //  explosionParticles.transform.parent = null;
 
             // Play the particle system.
             explosionParticles.Play();
@@ -77,6 +82,10 @@ namespace tankTutorial
             // Once the particles have finished, destroy the gameobject they are on.
             Invoke("HideShell", explosionParticles.main.duration);
             mr.enabled = false;
+            if (other.gameObject.GetComponent<TankHealth>())
+            {
+                other.gameObject.GetComponent<IDamagable>().TakeDamage(maxDamage);
+            }
             // Destroy the shell.dd
           //  Destroy(gameObject);
         }
@@ -84,6 +93,8 @@ namespace tankTutorial
         {
             gameObject.SetActive(false);
         }
+
+        /*
         float CalculateDamage(Vector3 targetPosition)
         {
             // Create a vector from the shell to the target.
@@ -103,5 +114,6 @@ namespace tankTutorial
 
             return damage;
         }
+        */
     }
 }

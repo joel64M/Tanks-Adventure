@@ -28,7 +28,7 @@ namespace NameSpaceName {
         //attack
         float attackAfterTime;
         STATE currentState = STATE.patrol;
-        [Flags]public enum STATE { patrol, retreat, atttack ,alert }
+      [SerializeField]  [Flags]public enum STATE { patrol, retreat, atttack ,alert }
     #endregion
 
     #region Builtin Methods
@@ -40,6 +40,7 @@ namespace NameSpaceName {
             target = GameObject.FindGameObjectWithTag("Player").transform;
             waitTime = startWaitTime;
 
+
         }
         private void OnDrawGizmos()
         {
@@ -49,23 +50,29 @@ namespace NameSpaceName {
    
         protected override void Update()
         {
-
+         //   if (gm.CurrentGameState != GAMESTATE.play)
+           //     return;
+            if(target)
             distbtwn = Vector3.Distance(transform.position, target.position);
-            if (distbtwn < minDistToTriggerAttack && currentState !=STATE.alert)
+            if (distbtwn < minDistToTriggerAttack && currentState !=STATE.alert && target.gameObject.activeSelf)
             {
               currentState |= STATE.alert;
-                print("atadg");
-
+            }
+            else
+            {
+                currentState &= ~STATE.alert;
             }
             Debug.DrawLine(transform.position, destPos, Color.blue);
             if (currentState == STATE.patrol)
             {
                 Patrol();
+                IsFire = false;
             }
             else if( currentState == (STATE.patrol | STATE.alert))
             {
                 Patrol();
-                Attack();
+                if (target)
+                    Attack();
             }
             else
             {
@@ -98,16 +105,19 @@ namespace NameSpaceName {
         #region Custom Methods
         void Attack()
         {
-            if (attackAfterTime <= 0)
+            if (target.gameObject.activeSelf)
             {
-                IsFire = true;
-                FirePos = target.position;
-                attackAfterTime = UnityEngine.Random.Range(0.5f, 2f);
-            }
-            else
-            {
-                attackAfterTime -= Time.deltaTime;
-                IsFire = false;
+                if (attackAfterTime <= 0)
+                {
+                    IsFire = true;
+                    FirePos = target.position;
+                    attackAfterTime = UnityEngine.Random.Range(0.2f, 0.7f);
+                }
+                else
+                {
+                    attackAfterTime -= Time.deltaTime;
+                    IsFire = false;
+                }
             }
         }
 

@@ -1,60 +1,108 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.UI;
-namespace tankTutorial
-{
-    public class TankHealth : MonoBehaviour
+namespace NameSpaceName {
+
+    public class TankHealth : MonoBehaviour , IDamagable
     {
+
         #region Variables
         public float startingHealth = 100f;
-        public Slider healthSlider;
-        public Image fillImage;
-        public Color fullHealthColor = Color.green;
-        public Color zeroHealthColor = Color.red;
-        public GameObject explosionPrefab;
-
-        AudioSource explosionAudioSource;
-        ParticleSystem explosionParticles;
-        float currentHealth;
+        float currentHealth = 0;
+    
         bool isDead;
+
+        //delegtes
+        public event Action<float,float> HealthChangedAction;
+        public event Action TankDestroyedAction;
+
+        [Header("Explosion Components")]
+        public Transform explosionTransform;
+         ParticleSystem tankExplosionParticles;
+         AudioSource explosionAudioSource;
         #endregion
 
-        private void Awake()
+        #region Builtin Methods
+
+        void Awake()
         {
-            explosionParticles = Instantiate(explosionPrefab).GetComponent<ParticleSystem>();
-            explosionAudioSource = explosionParticles.GetComponent<AudioSource>();
-            explosionParticles.gameObject.SetActive(false);
+            isDead = false;
+            InitTankExplosion();
         }
-        private void OnEnable()
+    
+        void OnEnable()
         {
             currentHealth = startingHealth;
-            isDead = false;
-            SetHealthUI();
+            tankExplosionParticles.transform.parent = this.transform;
+            tankExplosionParticles.transform.localPosition = Vector3.zero;
+        }
+
+        void Start()
+        {
+            
+        }
+
+        void Update()
+        {
+           
+        }
+
+        void FixedUpdate()
+        {
+            
+        }
+
+        void LateUpdate()
+        {
 
         }
-        public void TakeDamage(float amount)
+
+        void OnDisable()
         {
-            currentHealth -= amount;
-            SetHealthUI();
-            if (currentHealth <= 0f && !isDead)
+
+        }
+
+        void Destroy()
+        {
+
+        }
+
+
+
+        #endregion
+
+        #region Custom Methods
+        public void TakeDamage(float damage)
+        {
+            currentHealth -= damage;
+            if (currentHealth <= 0)
             {
+                TankDestroyedAction?.Invoke();
                 OnDeath();
             }
+            HealthChangedAction?.Invoke(currentHealth, startingHealth);
         }
-        void SetHealthUI()
+
+        void InitTankExplosion()
         {
-            healthSlider.value = currentHealth;
-            fillImage.color = Color.Lerp(zeroHealthColor, fullHealthColor, currentHealth / startingHealth);
+            tankExplosionParticles = explosionTransform.GetComponent<ParticleSystem>();
+            explosionAudioSource = explosionTransform.GetComponent<AudioSource>();
+ 
+            tankExplosionParticles.gameObject.SetActive(false);
         }
+
         void OnDeath()
         {
             isDead = true;
-            explosionParticles.transform.position = transform.position;
-            explosionParticles.gameObject.SetActive(true);
-            explosionParticles.Play();
+            tankExplosionParticles.transform.parent = null;
+            tankExplosionParticles.gameObject.SetActive(true);
+            tankExplosionParticles.Play();
             explosionAudioSource.Play();
             gameObject.SetActive(false);
         }
+        #endregion
+
     }
 }

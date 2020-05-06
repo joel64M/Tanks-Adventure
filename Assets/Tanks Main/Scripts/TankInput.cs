@@ -10,8 +10,9 @@ namespace NameSpaceName {
         #region Variables
         //public exposed
         ///public LayerMask ignoreLayer;
-         //read only inputs
+        //read only inputs
 
+      protected  GameManager gm;
         public float HorizontalInputValue
         {
             get;
@@ -43,10 +44,20 @@ namespace NameSpaceName {
         protected virtual void  Awake()
         {
             cam = Camera.main;
+            gm = FindObjectOfType<GameManager>();
         }
 
         protected virtual  void Update()
         {
+            if (gm.CurrentGameState != GAMESTATE.play)
+            {
+                IsFire = false;
+                VerticalInputValue = 0f;
+                HorizontalInputValue = 0f;
+                return;
+            }
+               
+
             if(cam)
             HandleFireInputs();
             HandleMovementInputs();

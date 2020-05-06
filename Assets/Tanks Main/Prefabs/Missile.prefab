@@ -115,10 +115,7 @@ MonoBehaviour:
     m_Bits: 256
   explosionParticles: {fileID: 7743992825939182752}
   explosionAudio: {fileID: 7743992825924647349}
-  maxDamage: 100
-  explosionForce: 1000
-  maxLifeTime: 2
-  explosionRadius: 5
+  maxDamage: 10
 --- !u!54 &5886372289214748225
 Rigidbody:
   m_ObjectHideFlags: 0
