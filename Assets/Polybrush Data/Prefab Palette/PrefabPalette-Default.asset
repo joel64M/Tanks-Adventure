@@ -13,29 +13,12 @@ MonoBehaviour:
   m_Name: PrefabPalette-Default
   m_EditorClassIdentifier: 
   prefabs:
-  - gameObject: {fileID: -927199367670048503, guid: 8e82afdc5bd294b1bbb78d04e0612bfa,
+  - gameObject: {fileID: -927199367670048503, guid: fb8df2bb6120d41bf95a0e9553aa549e,
       type: 3}
     settings:
       m_Strength: 100
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.8, y: 1.2}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: Tree1
-  - gameObject: {fileID: -927199367670048503, guid: fb8df2bb6120d41bf95a0e9553aa549e,
-      type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 10.212765, y: 0, z: 7.659561}
-      m_RotationRangeMax: {x: 10.212765, y: 360, z: 7.659561}
       m_ScaleRangeMin: {x: 0.7092198, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1.9148935, y: 1, z: 1}
       m_UniformScale: {x: 1, y: 2}
@@ -47,3 +30,20 @@ MonoBehaviour:
       m_YScaleBool: 0
       m_ZScaleBool: 0
     name: Rock1
+  - gameObject: {fileID: 1123692683969494767, guid: badf92444b6ee447e8c72ec7374361f9,
+      type: 3}
+    settings:
+      m_Strength: 23
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: Tree1_Prefab
