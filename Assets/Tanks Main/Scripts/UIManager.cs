@@ -104,6 +104,9 @@ namespace NameSpaceName {
                 case GAMESTATE.paused:
                     pausePanel.SetActive(true);
                     break;
+                case GAMESTATE.dialogue:
+                    //pausePanel.SetActive(false);
+                    break;
                 default:
                     Debug.Log("lol say what??");
                     break;

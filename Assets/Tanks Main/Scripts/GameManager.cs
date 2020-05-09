@@ -43,7 +43,7 @@ namespace NameSpaceName {
 
         void Start()
         {
-            SetGameState(GAMESTATE.play);
+           SetGameState(GAMESTATE.play);
 
         }
 
@@ -111,6 +111,10 @@ namespace NameSpaceName {
             else if( gs == GAMESTATE.play)
             {
                 Time.timeScale = 1f;
+            }
+            else if (gs == GAMESTATE.dialogue)
+            {
+                Time.timeScale = 0f;
             }
         }
 
