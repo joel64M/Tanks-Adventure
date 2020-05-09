@@ -38,10 +38,14 @@ namespace NameSpaceName
 
             Invoke("HideShell", explosionParticles.main.duration);
             mr.enabled = false;
-            if (other.gameObject.GetComponent<TankHealth>())
+            if (other.gameObject.CompareTag("Enemy"))
             {
-                other.gameObject.GetComponent<IDamagable>().TakeDamage(maxDamage);
+                if (other.GetComponent<IDamagable>() != null)
+                {
+                    other.GetComponent<IDamagable>().TakeDamage(maxDamage);
+                }
             }
+           
       
         }
         void HideShell()

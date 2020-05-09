@@ -39,7 +39,9 @@ namespace tankTutorial
         #region Custom Methods
         void CalculateOffset()
         {
-            offset = transform.position - target.position ;
+            offset = off;// transform.position - target.position ;
+          
+         //   off = offset;
         }
 
         protected virtual void HandleCamera()
