@@ -9,10 +9,11 @@ namespace NameSpaceName {
 
         #region Variables
         [SerializeField] Conversation convo;
-        public GameObject dialogueCanvas;
-        public UIDialogue uiDialogue;
+        [SerializeField] GameObject dialogueCanvas;
+         UIDialogue uiDialogue;
         bool lockCollision=false;
        public float timeToUnlockCollision = 5f;
+        public bool completeLevelOnConvoEnd = false;
         #endregion
 
         #region Builtin Methods
@@ -47,8 +48,15 @@ namespace NameSpaceName {
         
         public void UnlockCollision()
         {
+            if(completeLevelOnConvoEnd)
+            FindObjectOfType<GameManager>().SetGameState(GAMESTATE.levelComplete);
+            Invoke("Unlock", timeToUnlockCollision);
+        }
+
+        void Unlock()
+        {
             lockCollision = false;
-            print("unlocked");
+
         }
         void OnEnable()
         {

@@ -38,7 +38,7 @@ namespace NameSpaceName
 
             Invoke("HideShell", explosionParticles.main.duration);
             mr.enabled = false;
-            if (other.gameObject.CompareTag("Enemy"))
+            if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Player"))
             {
                 if (other.GetComponent<IDamagable>() != null)
                 {

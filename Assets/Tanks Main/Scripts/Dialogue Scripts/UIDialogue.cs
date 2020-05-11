@@ -27,20 +27,20 @@ namespace NameSpaceName {
         {
             gm = FindObjectOfType<GameManager>();
             canvas = GetComponent<Canvas>();
+            canvas.enabled = false;
         }
         private void Start()
         {
-            this.gameObject.SetActive(false);
-
+            //this.gameObject.SetActive(false);
         }
         private void OnEnable()
         {
-            gm.SetGameState(GAMESTATE.dialogue);
-            SetContinueButton(false);
+           // gm.SetGameState(GAMESTATE.dialogue);
+          //  SetContinueButton(false);
         }
         private void OnDisable()
         {
-            canvas.enabled = false;
+            //canvas.enabled = false;
         }
 
         #endregion
@@ -52,15 +52,20 @@ namespace NameSpaceName {
             tc = trigC;
             canvas.enabled = true;
             currentConversation = convo;
-            this.gameObject.SetActive(true);
+          //  this.gameObject.SetActive(true);
+            gm.SetGameState(GAMESTATE.dialogue);
+            SetContinueButton(false);
             NextLine();
         }
 
         public void _SkipButton()
         {
-            tc.Invoke("UnlockCollision", tc.timeToUnlockCollision);
-            this.gameObject.SetActive(false);
+            //   tc.un
+            canvas.enabled = false;
+         //   this.gameObject.SetActive(false);
             gm.SetGameState(GAMESTATE.play);
+            tc.UnlockCollision();
+
         }
 
         public void _ContinueButton()

@@ -17,7 +17,7 @@ namespace NameSpaceName {
 
         public GAMESTATE CurrentGameState { private set; get; }
 
-        
+       [SerializeField] int levelNo = 0;
         public event Action<GAMESTATE> OnGameStateChangedAction;
         #endregion
 
@@ -29,6 +29,7 @@ namespace NameSpaceName {
             enemyHealths = FindObjectsOfType<TankHealth>().ToList();
             enemyHealths.Remove(playerTankHealth);
             enemyCount = enemyHealths.Count;
+            levelNo = int.Parse(SceneManager.GetActiveScene().name);
         }
 
         void OnEnable()
@@ -44,22 +45,6 @@ namespace NameSpaceName {
         void Start()
         {
            SetGameState(GAMESTATE.play);
-
-        }
-
-        void Update()
-        {
-            
-        }
-
-        void FixedUpdate()
-        {
-            
-        }
-
-        void LateUpdate()
-        {
-
         }
 
         void OnDisable()
@@ -71,7 +56,6 @@ namespace NameSpaceName {
                 item.TankDestroyedAction -= OnEnemyDestroyed;
             }
         }
-
 
     #endregion
 
@@ -100,6 +84,7 @@ namespace NameSpaceName {
         private void OnLevelComplete()
         {
             SetGameState(GAMESTATE.levelComplete);
+         
         }
         private void OnGameStateChanged(GAMESTATE gs)
         {
@@ -116,6 +101,14 @@ namespace NameSpaceName {
             {
                 Time.timeScale = 0f;
             }
+            else if(gs == GAMESTATE.levelComplete)
+            {
+                if (PlayerPrefs.GetInt("LEVEL", 1) <= levelNo) // 2 
+                {
+                    //set+=1
+                    PlayerPrefs.SetInt("LEVEL", PlayerPrefs.GetInt("LEVEL", 1) + 1);
+                }
+            }
         }
 
         //Scene Management
@@ -125,11 +118,18 @@ namespace NameSpaceName {
         }
         public void GoToNextLevel()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            if(Application.CanStreamedLevelBeLoaded(SceneManager.GetActiveScene().buildIndex + 1))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+            else
+            {
+                SceneManager.LoadScene("Menu");
+            }
         }
         public void GoToMainMenu()
         {
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("menu");
         }
         #endregion
 

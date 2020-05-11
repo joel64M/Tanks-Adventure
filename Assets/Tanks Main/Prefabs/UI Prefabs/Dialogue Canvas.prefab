@@ -1364,7 +1364,7 @@ MonoBehaviour:
   continueButtonFake: {fileID: 424069876237094168}
   currentConversation: {fileID: 11400000, guid: b2c84585cab0a40e2800b7a06d4bab48,
     type: 2}
-  typingSpeed: 0.05
+  typingSpeed: 0.005
 --- !u!1 &424069876676837277
 GameObject:
   m_ObjectHideFlags: 0

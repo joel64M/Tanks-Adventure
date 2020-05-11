@@ -10,8 +10,8 @@ namespace NameSpaceName {
 
         #region Variables
        public Image fillImage;
-        Slider healthSlider;
-        TankHealth th;
+       [SerializeField] Slider healthSlider;
+       [SerializeField] TankHealth th;
         Camera cam;
     #endregion
 

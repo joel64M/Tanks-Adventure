@@ -36,7 +36,17 @@ namespace NameSpaceName {
 
         public void _LoadLevel()
         {
-            print(EventSystem.current.currentSelectedGameObject.name);
+            string level = (EventSystem.current.currentSelectedGameObject.name);
+
+            if (Application.CanStreamedLevelBeLoaded(level))
+            {
+                SceneManager.LoadScene(level);
+            }
+            else
+            {
+                SceneManager.LoadScene("Menu");
+            }
+           // SceneManager.LoadScene(level);
 
         }
 

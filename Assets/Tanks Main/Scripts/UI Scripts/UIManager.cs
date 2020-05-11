@@ -61,6 +61,7 @@ namespace NameSpaceName {
         }
         public void _ResumeButton()
         {
+            print("resume");
             gm.SetGameState(GAMESTATE.play);
         }
         public void _RestartButton()
@@ -88,7 +89,6 @@ namespace NameSpaceName {
             levelCompletePanel.SetActive(false);
             levelFailedPanel.SetActive(false);
             pausePanel.SetActive(false);
-
             switch (state)
             {
               

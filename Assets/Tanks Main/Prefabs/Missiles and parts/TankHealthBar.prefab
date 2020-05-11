@@ -84,7 +84,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.256
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 3309307304972567976}
   - component: {fileID: 3309307304972567979}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: TankHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc315149e05c4e33b28f89265b580d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillImage: {fileID: 0}
+  fillImage: {fileID: 3309307303940495762}
 --- !u!1 &3309307305169073208
 GameObject:
   m_ObjectHideFlags: 0
