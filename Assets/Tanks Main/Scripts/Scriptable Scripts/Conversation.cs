@@ -8,7 +8,7 @@ namespace NameSpaceName {
     public struct Line
     {
         public Character character;
-        [TextArea(1,2)]
+        [TextArea(1,4)]
         public string characterDialogue;
     }
 

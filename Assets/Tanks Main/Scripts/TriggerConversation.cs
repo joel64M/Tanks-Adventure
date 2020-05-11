@@ -11,15 +11,24 @@ namespace NameSpaceName {
         [SerializeField] Conversation convo;
         public GameObject dialogueCanvas;
         public UIDialogue uiDialogue;
+        bool lockCollision=false;
+       public float timeToUnlockCollision = 5f;
         #endregion
 
         #region Builtin Methods
 
         private void OnCollisionEnter(Collision other)
         {
+            if (lockCollision)
+            {
+                return;
+            }
+
+            lockCollision = true;
+
             if (other.gameObject.CompareTag("Player"))
             {
-                uiDialogue.InitializeConvo(convo);
+                uiDialogue.InitializeConvo(convo,this);
             }
         }
 
@@ -35,7 +44,12 @@ namespace NameSpaceName {
                 uiDialogue = go.GetComponent<UIDialogue>();
             }
         }
-
+        
+        public void UnlockCollision()
+        {
+            lockCollision = false;
+            print("unlocked");
+        }
         void OnEnable()
         {
 

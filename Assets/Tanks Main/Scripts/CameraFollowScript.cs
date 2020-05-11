@@ -24,8 +24,11 @@ namespace tankTutorial
         // Start is called before the first frame update
         void Start()
         {
-            if(target)
-            CalculateOffset();
+            if (target)
+            {
+                CalculateOffset();
+                transform.position = target.position + offset;
+            }
         }
 
         // Update is called once per frame
@@ -39,9 +42,7 @@ namespace tankTutorial
         #region Custom Methods
         void CalculateOffset()
         {
-            offset = off;// transform.position - target.position ;
-          
-         //   off = offset;
+            offset = off;
         }
 
         protected virtual void HandleCamera()
@@ -49,8 +50,6 @@ namespace tankTutorial
             if (target)
             {
                 wantedPosition = target.position + offset;
-                //  wantedPosition.x = transform.position.x;
-
                 Vector3 tempPos = Vector3.SmoothDamp(transform.position, wantedPosition, ref currentVelocity, smoothTime);
       //          tempPos.x = Mathf.Clamp(tempPos.x, -clampX, clampX);
              //   tempPos.z = Mathf.Clamp(tempPos.z, -clampZ, clampZ);

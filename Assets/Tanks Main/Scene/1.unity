@@ -14926,6 +14926,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dialogue Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 424069876623601950, guid: dba28e8af10884db69e53af6b0b01f83,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dba28e8af10884db69e53af6b0b01f83, type: 3}
 --- !u!1001 &1819992570
@@ -17952,7 +17957,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6995033343792054438}
   m_LocalRotation: {x: 0.000000021855694, y: 0.0000000754979, z: -1.5888266e-15, w: 1}
-  m_LocalPosition: {x: -16.821386, y: -0.0036134142, z: -8.817811}
+  m_LocalPosition: {x: -46.4, y: -0.0036134142, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7658003554319493660}
@@ -17991,10 +17996,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d1d3e09a20f4d15aad67d3a2c50217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  convo: {fileID: 11400000, guid: b2c84585cab0a40e2800b7a06d4bab48, type: 2}
+  convo: {fileID: 11400000, guid: 1e7c78131ddba48309bd05980ad972ac, type: 2}
   dialogueCanvas: {fileID: 424069876623601950, guid: dba28e8af10884db69e53af6b0b01f83,
     type: 3}
   uiDialogue: {fileID: 0}
+  timeToUnlockCollision: 10
 --- !u!65 &6995033343792054440
 BoxCollider:
   m_ObjectHideFlags: 0

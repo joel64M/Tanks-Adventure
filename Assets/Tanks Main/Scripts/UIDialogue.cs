@@ -13,11 +13,12 @@ namespace NameSpaceName {
         [SerializeField] SpeakerUI rightSpeaker;
         [SerializeField] Button continueButton;
         [SerializeField] GameObject continueButtonFake;
-
+        Canvas canvas;
         public Conversation currentConversation;
         int index;
         GameManager gm;
         public float typingSpeed = 1f;
+        TriggerConversation tc;
         #endregion
 
         #region Builtin Methods
@@ -25,6 +26,7 @@ namespace NameSpaceName {
         void Awake()
         {
             gm = FindObjectOfType<GameManager>();
+            canvas = GetComponent<Canvas>();
         }
         private void Start()
         {
@@ -38,35 +40,35 @@ namespace NameSpaceName {
         }
         private void OnDisable()
         {
-            GetComponent<Canvas>().enabled = false;
-
+            canvas.enabled = false;
         }
+
         #endregion
 
         #region Custom Methods
-        public void _SkipButton()
-        {
-            print("Skipped");
-            this.gameObject.SetActive(false);
-            gm.SetGameState(GAMESTATE.play);
-
-        }
-        public void _ContinueButton()
-        {
-            print("Continue");
-            SetContinueButton(false);
-            NextLine();
-        }
-        public void InitializeConvo(Conversation convo)
+        public void InitializeConvo(Conversation convo,TriggerConversation trigC)
         {
             index = 0;
-            GetComponent<Canvas>().enabled = true;
-
+            tc = trigC;
+            canvas.enabled = true;
             currentConversation = convo;
             this.gameObject.SetActive(true);
             NextLine();
         }
 
+        public void _SkipButton()
+        {
+            tc.Invoke("UnlockCollision", tc.timeToUnlockCollision);
+            this.gameObject.SetActive(false);
+            gm.SetGameState(GAMESTATE.play);
+        }
+
+        public void _ContinueButton()
+        {
+            SetContinueButton(false);
+            NextLine();
+        }
+     
         void NextLine()
         {
             if (index < currentConversation.dialogueLines.Length )
@@ -76,9 +78,10 @@ namespace NameSpaceName {
             }
             else
             {
-                print("End Convo");
-                gm.SetGameState(GAMESTATE.play);
-                this.gameObject.SetActive(false);
+                //  tc.Invoke("UnlockCollision", tc.timeToUnlockCollision);
+                // gm.SetGameState(GAMESTATE.play);
+                // this.gameObject.SetActive(false);
+                _SkipButton();
             }
         }
         void DisplayLine()
@@ -104,7 +107,6 @@ namespace NameSpaceName {
             sui.characterImage.sprite = currentConversation.dialogueLines[index].character.charImage;
             foreach (var item in currentConversation.dialogueLines[index].characterDialogue)
             {
-               
                 sui.dialogueTxt.text += item;
                 if (item == ' ')
                 {
