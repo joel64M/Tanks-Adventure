@@ -129,6 +129,7 @@ namespace NameSpaceName {
         }
         public void GoToMainMenu()
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene("menu");
         }
         #endregion

@@ -43,7 +43,7 @@ namespace NameSpaceName {
             
         }
 
-        void Update()
+        void FixedUpdate()
         {
             if (rb)
             {

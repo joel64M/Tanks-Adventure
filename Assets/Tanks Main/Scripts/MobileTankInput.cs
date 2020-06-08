@@ -12,7 +12,7 @@ namespace NameSpaceName {
         public bool isfiree;
 
         //components
-        VariableJoystick joystick;
+    public    VariableJoystick joystick;
 
         [Header("Touch Struct")]
         [SerializeField] List<TouchhStruct> TouchStructList = new List<TouchhStruct>();
@@ -25,7 +25,7 @@ namespace NameSpaceName {
         protected override void Awake()
         {
             base.Awake();
-            joystick = GameObject.FindGameObjectWithTag("JoyStick").GetComponent<VariableJoystick>();
+         //joystick = GameObject.FindGameObjectWithTag("JoyStick").GetComponent<VariableJoystick>();
         }
 
         #endregion
@@ -128,6 +128,7 @@ namespace NameSpaceName {
                             {
                             FindFirePos(Input.GetTouch(i).position);
                             isfiree = true;
+                            IsFire = true;
                             }
                         }
 
@@ -150,7 +151,7 @@ namespace NameSpaceName {
                 Vector3 hitPos;
                 Ray ray = cam.ScreenPointToRay(mousePos);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100f))
+                if (Physics.Raycast(ray, out hit, 1000f))
                 {
                     //    if ((int)Mathf.Pow(2, hit.transform.gameObject.layer) == (int)layermask)
                     {

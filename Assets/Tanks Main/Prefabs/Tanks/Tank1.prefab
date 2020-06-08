@@ -9539,7 +9539,6 @@ GameObject:
   - component: {fileID: 5642496163592350857}
   - component: {fileID: 3680895422804661951}
   - component: {fileID: 6929249313971890758}
-  - component: {fileID: 807437991329290870}
   - component: {fileID: 807437991329290873}
   - component: {fileID: 807437991329290868}
   - component: {fileID: 807437991329290869}
@@ -9547,6 +9546,7 @@ GameObject:
   - component: {fileID: 8652951475216703128}
   - component: {fileID: 8652951475216703129}
   - component: {fileID: 8652951475216703126}
+  - component: {fileID: 3126907670081991996}
   m_Layer: 0
   m_Name: Tank1
   m_TagString: Player
@@ -9620,18 +9620,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &807437991329290870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8652951475216703130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba33e54d57ee74c968e96103bfdcce83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &807437991329290873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9652,6 +9640,8 @@ MonoBehaviour:
     type: 3}
   fireAudio: {fileID: 807437991329290869}
   fireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
+  isTurretRotated: 1
+  tankInputScript: {fileID: 0}
   missileAmount: 20
 --- !u!82 &807437991329290868
 AudioSource:
@@ -9910,6 +9900,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   explosionTransform: {fileID: 1603748442195433606}
+--- !u!114 &3126907670081991996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8652951475216703130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6c9b98274a6452f8273ab6384e479d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isfiree: 0
+  joystick: {fileID: 0}
+  TouchStructList: []
 --- !u!1001 &2799442256978169745
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -31,7 +31,8 @@ namespace NameSpaceName {
             healthSlider = GetComponentInChildren<Slider>(true);
             healthSlider.value = healthSlider.maxValue;
             gm = FindObjectOfType<GameManager>();
-
+            if (playerTankHealth.gameObject.GetComponent<MobileTankInput>() != null)
+            playerTankHealth.gameObject.GetComponent<MobileTankInput>().joystick = GetComponentInChildren<VariableJoystick>();
             gamePlayPanel.SetActive(false);
             levelCompletePanel.SetActive(false);
             levelFailedPanel.SetActive(false);

@@ -28,18 +28,18 @@ namespace NameSpaceName {
         Vector3 turretDirectionVector;
 
         bool canFire = true;
-        bool isTurretRotated = true;
+      public  bool isTurretRotated = true;
 
         //components
         Camera cam;
-        TankInput tankInputScript;
+       public TankInput tankInputScript;
         #endregion
 
         #region Builtin Methods
 
         void Start()
         {
-            tankInputScript = GetComponent<TankInput>();
+           tankInputScript = GetComponent<TankInput>();
             CreateMissileParent();
             CreateMissilePool();
         }
@@ -49,9 +49,11 @@ namespace NameSpaceName {
             if (tankInputScript)
             {
                 if (tankInputScript.IsFire)
+                {
                     isTurretRotated = false;
-              //if (!isTurretRotated)
-                    HandleTurret();
+                }
+                //if (!isTurretRotated)
+                HandleTurret();
             }
         }
 
@@ -62,6 +64,7 @@ namespace NameSpaceName {
        
         void HandleTurret()
         {
+
             //calculate direction to the firepos
             turretDirectionVector = tankInputScript.FirePos- transform.position;
             turretDirectionVector.y = 0f;
@@ -71,9 +74,10 @@ namespace NameSpaceName {
             rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.y, 0);
 
             turret.rotation = Quaternion.RotateTowards(turret.rotation, rotation,turretDegPerSecSpeed * Time.deltaTime);
-
+          
             if(turret.forward.normalized == turretDirectionVector.normalized && !isTurretRotated)
             {
+
                 isTurretRotated = true;
                 FireMissile();
             }
