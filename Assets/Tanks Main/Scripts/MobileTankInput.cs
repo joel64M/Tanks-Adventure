@@ -82,12 +82,7 @@ namespace NameSpaceName {
                     
                             if(TouchStructList.Count>0)
                             {
-                                 /*
-                                if (!kkk.Any(dd => dd.touch.fingerId == Input.GetTouch(i).fingerId))
-                                {
-                                    kkk.Add(t);
-                                }
-                                */
+             
                                 bool isThere=false;
                                 foreach (var item in TouchStructList)
                                 {
@@ -108,14 +103,7 @@ namespace NameSpaceName {
                             }
                         if (Input.GetTouch(i).phase == TouchPhase.Began || Input.GetTouch(i).phase == TouchPhase.Moved)
                         {
-                           /*
-                                if(!kkk.Any(oi => (oi.ignoreIt == true) && oi.touch.fingerId == Input.GetTouch(i).fingerId))
-                                {
-                                   // IsFire = true;
-                                     // FireClick(Input.GetTouch(i).position);
-                                    isfiree = true;
-                                }
-                            */
+   
                              bool isThere = false;
                             foreach (var item in TouchStructList)
                             {
@@ -164,38 +152,27 @@ namespace NameSpaceName {
 
         private bool IsPointerOverUIObject(Touch touch,int i)
         {
+            
             bool boo= false;
             if ( TouchStructList.Count>0 && i <TouchStructList.Count)
             {
                 foreach (var item in TouchStructList)
                 {
-                    if(item.ignoreIt == false && item.touch.fingerId == touch.fingerId)
-                    {
-                        boo =  false;
-                    }
-                    else
+                    if(item.ignoreIt == true && item.touch.fingerId == touch.fingerId)
                     {
                         boo =  true;
                     }
+                    else
+                    {
+                        boo =  false;
+                    }
                 }
                 return boo;
-                     
-                /*
-                if (!kkk.Any(oi => (oi.ignoreIt == true) && oi.touch.fingerId == touch.fingerId))
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-                */
-               
             }
             else
             {
-
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(i).fingerId))
+                print("ff");
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 {
                     return true;
                 }
@@ -203,14 +180,7 @@ namespace NameSpaceName {
                 {
                     return false;
                 }
-
-                 //   PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-                //    eventDataCurrentPosition.position = new Vector2(touch.position.x, touch.position.y);
-                //    List<RaycastResult> results = new List<RaycastResult>();
-                //    EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-                //    return results.Count > 0;
-            }
-         
+           }
         }
         #endregion
 

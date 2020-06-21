@@ -4901,6 +4901,8 @@ MonoBehaviour:
     type: 3}
   fireAudio: {fileID: 4719623263682690309}
   fireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
+  isTurretRotated: 1
+  tankInputScript: {fileID: 0}
   missileAmount: 20
 --- !u!82 &4719623263682690306
 AudioSource:
@@ -5160,8 +5162,8 @@ MonoBehaviour:
   distbtwn: 0
   target: {fileID: 0}
   inputVec: {x: 0, y: 0, z: 0}
-  min: {x: -30, y: 0, z: 0}
-  max: {x: 0, y: 0, z: 22}
+  min: {x: -9.66, y: 0, z: -17.35}
+  max: {x: 11.5, y: 0, z: 13.4}
   minDisToPatrol: 10
   minStoppingDist: 5
   minDistToTriggerAttack: 20

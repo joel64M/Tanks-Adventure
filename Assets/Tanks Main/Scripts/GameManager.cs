@@ -15,6 +15,7 @@ namespace NameSpaceName {
      public   List<TankHealth> enemyHealths = new List<TankHealth>();
         TankHealth playerTankHealth;
 
+       public AudioSource[] allas;
         public GAMESTATE CurrentGameState { private set; get; }
 
        [SerializeField] int levelNo = 0;
@@ -30,6 +31,7 @@ namespace NameSpaceName {
             enemyHealths.Remove(playerTankHealth);
             enemyCount = enemyHealths.Count;
             levelNo = int.Parse(SceneManager.GetActiveScene().name);
+            allas = FindObjectsOfType<AudioSource>() ;
         }
 
         void OnEnable()
@@ -92,14 +94,27 @@ namespace NameSpaceName {
             if(gs == GAMESTATE.paused)
             {
                 Time.timeScale = 0;
+                foreach(AudioSource ad in allas)
+                {
+                    ad.enabled = false;
+                }
             }
             else if( gs == GAMESTATE.play)
             {
                 Time.timeScale = 1f;
+                foreach (AudioSource ad in allas)
+                {
+                    ad.enabled = true;
+
+                }
             }
             else if (gs == GAMESTATE.dialogue)
             {
                 Time.timeScale = 0f;
+                foreach (AudioSource ad in allas)
+                {
+                    ad.enabled = false;
+                }
             }
             else if(gs == GAMESTATE.levelComplete)
             {
