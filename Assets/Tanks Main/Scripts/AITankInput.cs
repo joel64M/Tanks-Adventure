@@ -111,7 +111,7 @@ namespace NameSpaceName {
                 {
                     IsFire = true;
                     FirePos = target.position;
-                    attackAfterTime = UnityEngine.Random.Range(0.2f, 0.7f);
+                    attackAfterTime = UnityEngine.Random.Range(0.1f, 0.3f);
                 }
                 else
                 {

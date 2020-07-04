@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd3fe33499d2b4dba90a257517389d9a, type: 3}
-  m_Name: Big Smoke
+  m_Name: General K.C
   m_EditorClassIdentifier: 
-  charName: Carolee
+  charName: General K.C
   charImage: {fileID: 21300000, guid: e5b5b241c76e74ce096eed5a3fc09e40, type: 3}

@@ -6,7 +6,7 @@ namespace NameSpaceName {
 
     public class ShellMovement : MonoBehaviour
     {
-        public static bool isBook;
+        //public static bool isBook;
 
         #region Variables
         public float speed;
@@ -23,7 +23,7 @@ namespace NameSpaceName {
         void Awake()
         {
             rb = GetComponent<Rigidbody>();
-            isBook = true;
+         //   isBook = true;
         }
 
         void OnEnable()

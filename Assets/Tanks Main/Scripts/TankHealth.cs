@@ -21,7 +21,7 @@ namespace NameSpaceName {
         [Header("Explosion Components")]
         public Transform explosionTransform;
          ParticleSystem tankExplosionParticles;
-         AudioSource explosionAudioSource;
+        public AudioSource explosionAudioSource;
         #endregion
 
         #region Builtin Methods

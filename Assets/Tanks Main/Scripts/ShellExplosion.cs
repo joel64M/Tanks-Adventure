@@ -10,11 +10,17 @@ namespace NameSpaceName
         #region Varibles
         public LayerMask tankMask;
         public ParticleSystem explosionParticles;
+
+        public GameObject explosionEffect;
+        public GameObject shootingEffect;
+        public GameObject muzzleEffect;
         public AudioSource explosionAudio;
+        public AudioSource shootAudio;
+
         public float maxDamage = 10f;
 
 
-        MeshRenderer mr;
+      public  MeshRenderer mr;
 
         #endregion
 
@@ -23,20 +29,39 @@ namespace NameSpaceName
         {
             mr = GetComponent<MeshRenderer>();
             mr.enabled = true;
-            explosionParticles.Play();
+            // explosionParticles.Play();
+            if (muzzleEffect)
+            {
+                muzzleEffect.transform.parent = null;
+                Invoke("ParentMuzzleBack", 2f);
+            }
+            if (shootingEffect)
+            {
+                shootingEffect.SetActive(true);
+            }
+            if (explosionEffect)
+            {
+                explosionEffect.SetActive(false);
+            }
+           
         }
 
 
 
         private void OnTriggerEnter(Collider other)
         {
+            //  explosionParticles.Play();
 
-       
-            explosionParticles.Play();
-
-            explosionAudio.Play();
-
-            Invoke("HideShell", explosionParticles.main.duration);
+            // explosionAudio.Play();
+            if (shootingEffect)
+            {
+                shootingEffect.SetActive(false);
+            }
+            if (explosionEffect)
+            {
+                explosionEffect.SetActive(true);
+            }
+            Invoke("HideShell", 1f);
             mr.enabled = false;
             if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Player"))
             {
@@ -53,6 +78,11 @@ namespace NameSpaceName
             gameObject.SetActive(false);
         }
 
+        void ParentMuzzleBack()
+        {
+            muzzleEffect.transform.parent = this.transform;
+            muzzleEffect.transform.localPosition = Vector3.zero;
+        }
   
     }
 }

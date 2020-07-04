@@ -85,8 +85,11 @@ namespace NameSpaceName {
         }
         private void OnLevelComplete()
         {
+            Invoke("OnLevelCompleteDelay", 1.5f);
+        }
+        void OnLevelCompleteDelay()
+        {
             SetGameState(GAMESTATE.levelComplete);
-         
         }
         private void OnGameStateChanged(GAMESTATE gs)
         {

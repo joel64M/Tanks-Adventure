@@ -16,12 +16,8 @@ MonoBehaviour:
   rightCharacter: {fileID: 11400000, guid: 68ba94e25dd544951a67c8aba28f9c31, type: 2}
   dialogueLines:
   - character: {fileID: 11400000, guid: 6ef99bf0625004fbc9e66932db9a1814, type: 2}
-    characterDialogue: Hey old hag. Where are the others and what happened to you?
+    characterDialogue: General K.C ! What happened to you and where is everyone ?
   - character: {fileID: 11400000, guid: 68ba94e25dd544951a67c8aba28f9c31, type: 2}
-    characterDialogue: We were invaded by the red army and they taken us as prisoners.
-      They twisted my turret !!!
+    characterDialogue: 'We were invaded by the red army! and twisted my turret '
   - character: {fileID: 11400000, guid: 68ba94e25dd544951a67c8aba28f9c31, type: 2}
-    characterDialogue: You have to find the others and save them. They taken cece
-      too !!! :(
-  - character: {fileID: 11400000, guid: 6ef99bf0625004fbc9e66932db9a1814, type: 2}
-    characterDialogue: sure my nibba!
+    characterDialogue: You have to find the others and rescue them.
