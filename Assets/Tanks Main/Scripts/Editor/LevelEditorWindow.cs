@@ -34,60 +34,73 @@ namespace NameSpaceName {
             InitTextures();
             skin = Resources.Load<GUISkin>("GuiSkins/LevelEditorSkin");
 
-            // go = Resources.LoadAll<GameObject>("props");
-
-            /*
-            for (int i = 0; i < prefabObjs.Count; i++)
-            {
-                for (int j = 0; j < prefabObjs[i].Length; j++)
-                {
-                    Debug.Log(prefabObjs[i][j].name);
-
-                }
-            }
-            */
             if (PlayerPrefs.GetInt("PathCount") > 0)
             {
                 for (int i = 0; i < PlayerPrefs.GetInt("PathCount"); i++)
                 {
-                 prefabPaths.Add(PlayerPrefs.GetString("Path" + (i+1).ToString()));
-                    GameObject[] goz = Resources.LoadAll<GameObject>(prefabPaths[i]);
-                    prefabObjs.Add(goz);
+                    string str = PlayerPrefs.GetString("Path" + (i).ToString());
+                    Debug.Log("Loading as ... path" + (i).ToString() + " :" + str);
+                    prefabPaths.Add(str);
+                    GameObject[] gos = Resources.LoadAll<GameObject>(prefabPaths[i]);
+                    prefabObjs.Add(gos);
                 }
             }
-
-
         }
-        string tempp;
+
         private void OnGUI()
         {
             DrawLayouts();
             DrawHeader();
             DrawButtons();
-            GUILayout.BeginArea(addPrefabsButonRect);
-         
-         
-            GUILayout.EndArea();
+          
             GUILayout.BeginArea(spawnObjRect);
 
             if (prefabObjs.Count >0 )
             {
-
-
                 for (int j = 0; j < prefabObjs.Count; j++)
                 {
-                    if (GUILayout.Button("Delete",GUILayout.Width(50f)))
+
+                    GUILayout.BeginHorizontal();
+                    float columns = 2f;
+                    float tempWidth = Screen.width / columns;
+
+                    GUILayout.Label(prefabPaths[j], skin.GetStyle("Name"));
+                    //{
+
+                   // }
+
+                    if (GUILayout.Button("Delete", GUILayout.Width(tempWidth)))
                     {
-                        Debug.Log(PlayerPrefs.GetInt("PathCount"));
+                       // Debug.Log("************"+prefabObjs.Count);
                         prefabPaths.RemoveAt(j);
                         prefabObjs.RemoveAt(j);
+                     //   Debug.Log("************" + prefabObjs.Count);
+
                         PlayerPrefs.DeleteKey("Path" + j.ToString());
+                     //   List<GameObject[]> tempList = prefabObjs;
+                       // prefabObjs = tempList;
+                       // List<string> tempList2 = prefabPaths;
+                       // prefabPaths = tempList2;
+                      //  Debug.Log(PlayerPrefs.GetString("Path0"));
+                       // Debug.Log(PlayerPrefs.GetString("Path1"));
+                        foreach (var item in prefabPaths)
+                        {
+                         //   Debug.Log(item);
+                        }
+                        ///
+                        ///  have to order  the list and save it again 
+                        //
+                        for (int i = 0; i < prefabPaths.Count; i++)
+                        {
+                            PlayerPrefs.SetString("Path" + i.ToString(), prefabPaths[i]);
+                        }
                         PlayerPrefs.SetInt("PathCount", prefabPaths.Count);
-                        Debug.Log(PlayerPrefs.GetInt("PathCount"));
-                        List<GameObject[]> ddd = prefabObjs;
-                        prefabObjs = ddd;
+                       // Debug.Log("path count after deleting" + PlayerPrefs.GetInt("PathCount"));
+
                         break;
                     }
+                    GUILayout.EndHorizontal();
+
                     GUILayout.BeginHorizontal();
                     
                     if (prefabObjs.Count > 0)
@@ -101,70 +114,67 @@ namespace NameSpaceName {
                             }
                         }
                     }
-                  
 
                     GUILayout.EndHorizontal();
+                    GUILayout.Space(5);
+
                 }
-
-
             }
-
+            GUILayout.Space(5);
             if (GUILayout.Button("Add Prefabs"))
             {
-                 tempp  = EditorUtility.OpenFolderPanel("Select Path", "Assets", "hey");
-                DirectoryInfo dir = new DirectoryInfo(tempp);
-              
+                string str  = EditorUtility.OpenFolderPanel("Select Path", "Assets", "what does this do lol ?");
+                DirectoryInfo dir = new DirectoryInfo(str);
                 DirectoryInfo[] info = dir.GetDirectories("*.*");
                 int count = dir.GetDirectories().Length;
+               // Debug.Log(count);
                 if (count == 0)
                 {
                     string st = (Path.GetFileName(Path.GetFullPath(dir.ToString()).TrimEnd(Path.DirectorySeparatorChar)));
                     prefabPaths.Add(st);
-                    GameObject[] goz = Resources.LoadAll<GameObject>(st);
-                    prefabObjs.Add(goz);
-                    PlayerPrefs.SetString("Path" + prefabPaths.Count, st);
+                    GameObject[] gos = Resources.LoadAll<GameObject>(st);
+                    if(gos.Length==0)
+                    {
+                        return;
+                    }
+                    prefabObjs.Add(gos);
+                  //  Debug.Log("Saving as ...path" + (prefabObjs.Count).ToString() + " :" + st);
+                    PlayerPrefs.SetString("Path" + (prefabObjs.Count-1).ToString(), st);
                     PlayerPrefs.SetInt("PathCount", PlayerPrefs.GetInt("PathCount") + 1);
                 }
                 else
                 {
                     for (int i = 0; i < count; i++)
                     {
-
-                        //Debug.Log("Found Directory: " + Path.GetFileName( Path.GetFullPath(info[i].ToString()).TrimEnd(Path.DirectorySeparatorChar)));
                         string st = (Path.GetFileName(Path.GetFullPath(info[i].ToString()).TrimEnd(Path.DirectorySeparatorChar)));
                         prefabPaths.Add(st);
-                        GameObject[] goz = Resources.LoadAll<GameObject>(st);
-                        prefabObjs.Add(goz);
-                        PlayerPrefs.SetString("Path" + prefabPaths.Count, st);
+                        GameObject[] gos = Resources.LoadAll<GameObject>(st);
+                        if (gos.Length == 0)
+                        {
+                            return;
+                        }
+                        prefabObjs.Add(gos);
+
+                        Debug.Log("Saving as ...path"+(  prefabObjs.Count-1).ToString() + " :" + st);
+                        PlayerPrefs.SetString("Path" +(prefabObjs.Count-1).ToString(), st);
+
+                      //  Debug.Log(PlayerPrefs.GetString("Path0"));
+                      //  Debug.Log(PlayerPrefs.GetString("Path1"));
                         PlayerPrefs.SetInt("PathCount", PlayerPrefs.GetInt("PathCount") + 1);
-
-                        //  Debug.Log(prefabObjs[i]);
-
                     }
                 }
-             
-                 
-               
-              
-
             }
 
-          
-           
-        
-           
             GUILayout.EndArea();
 
-           
         }
         #endregion
 
         #region Custom Methods
         void InitTextures()
         {
-
-           headerSectionTexture = new Texture2D(1, 1);
-           headerSectionTexture.SetPixel(0, 0, Color.grey);
+            headerSectionTexture = new Texture2D(1, 1);
+            headerSectionTexture.SetPixel(0, 0, Color.gray);
             headerSectionTexture.Apply();
           //or
           //  headerSectionTexture = Resources.Load<Texture2D>("grass");
@@ -175,27 +185,27 @@ namespace NameSpaceName {
             headerSectionRect.x = 0;
             headerSectionRect.y = 0;
             headerSectionRect.width = Screen.width;
-            headerSectionRect.height = 50f;
+            headerSectionRect.height = 30f;
             GUI.DrawTexture(headerSectionRect, headerSectionTexture);
 
             spawnObjRect.x =0;
-            spawnObjRect.y = 50f;
+            spawnObjRect.y = 30f;
             spawnObjRect.width = Screen.width;
             spawnObjRect.height = 600f;
             GUI.DrawTexture(spawnObjRect, new Texture2D(1, 1));
 
 
-            addPrefabsButonRect.x = 0f;
-            addPrefabsButonRect.y = 0f;
-            addPrefabsButonRect.width = 90f;
-            addPrefabsButonRect.height = 50f;
-            GUI.DrawTexture(addPrefabsButonRect, new Texture2D(1, 1));
+          //  addPrefabsButonRect.x = 0f;
+          //  addPrefabsButonRect.y = 0f;
+           // addPrefabsButonRect.width = 90f;
+           // addPrefabsButonRect.height = 50f;
+           // GUI.DrawTexture(addPrefabsButonRect, new Texture2D(1, 1));
 
         }
         void DrawHeader()
         {
             GUILayout.BeginArea(headerSectionRect);
-            GUILayout.Label("Hello Cello",skin.GetStyle("Header1"));
+            GUILayout.Label("Noob Level Editor",skin.GetStyle("Header1"));
             GUILayout.EndArea();
         }
 
