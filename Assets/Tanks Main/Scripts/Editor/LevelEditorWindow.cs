@@ -17,10 +17,11 @@ namespace NameSpaceName {
         List<GameObject[]> prefabObjs = new List<GameObject[]>();
         GUISkin skin;
         List<string> prefabPaths = new List<string>();
-        
-    #endregion
+        GameObject currentPrefab;
 
-    #region Builtin Methods
+        #endregion
+
+        #region Builtin Methods
 
         [MenuItem("Editor/LevelEditor")]
         static void ShowWindow() // custom method
@@ -33,7 +34,7 @@ namespace NameSpaceName {
         {
             InitTextures();
             skin = Resources.Load<GUISkin>("GuiSkins/LevelEditorSkin");
-
+         
             if (PlayerPrefs.GetInt("PathCount") > 0)
             {
                 for (int i = 0; i < PlayerPrefs.GetInt("PathCount"); i++)
@@ -95,7 +96,8 @@ namespace NameSpaceName {
                             PlayerPrefs.SetString("Path" + i.ToString(), prefabPaths[i]);
                         }
                         PlayerPrefs.SetInt("PathCount", prefabPaths.Count);
-                       // Debug.Log("path count after deleting" + PlayerPrefs.GetInt("PathCount"));
+                        PlayerPrefs.Save();
+                        // Debug.Log("path count after deleting" + PlayerPrefs.GetInt("PathCount"));
 
                         break;
                     }
@@ -141,6 +143,7 @@ namespace NameSpaceName {
                   //  Debug.Log("Saving as ...path" + (prefabObjs.Count).ToString() + " :" + st);
                     PlayerPrefs.SetString("Path" + (prefabObjs.Count-1).ToString(), st);
                     PlayerPrefs.SetInt("PathCount", PlayerPrefs.GetInt("PathCount") + 1);
+                    PlayerPrefs.Save();
                 }
                 else
                 {
@@ -161,6 +164,7 @@ namespace NameSpaceName {
                       //  Debug.Log(PlayerPrefs.GetString("Path0"));
                       //  Debug.Log(PlayerPrefs.GetString("Path1"));
                         PlayerPrefs.SetInt("PathCount", PlayerPrefs.GetInt("PathCount") + 1);
+                        PlayerPrefs.Save();
                     }
                 }
             }

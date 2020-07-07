@@ -49,7 +49,6 @@ namespace NameSpaceName {
                         if(currentPrefab == levelMap.pList[j].prefab[i])
                         {
                         
-                          
                             if (GUILayout.Button(prefabTexture, GUILayout.MaxWidth(80), GUILayout.MaxHeight(80)))
                             {
                                 currentPrefab = levelMap.pList[j].prefab[i];
