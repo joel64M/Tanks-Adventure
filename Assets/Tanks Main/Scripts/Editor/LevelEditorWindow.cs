@@ -27,11 +27,15 @@ namespace NameSpaceName {
         static void ShowWindow() // custom method
         {
             LevelEditorWindow window = GetWindow<LevelEditorWindow>("Level Editor");
-            window.minSize = new Vector2(400, 200);
+            window.minSize = new Vector2(300, 200);
             window.Show();
         }
+
+        
         private void OnEnable()
         {
+            SceneView.duringSceneGui += this.OnSceneGUI;
+
             InitTextures();
             skin = Resources.Load<GUISkin>("GuiSkins/LevelEditorSkin");
          
@@ -47,13 +51,14 @@ namespace NameSpaceName {
                 }
             }
         }
+        void OnDisable() { SceneView.duringSceneGui -= this.OnSceneGUI; }
 
         private void OnGUI()
         {
             DrawLayouts();
             DrawHeader();
             DrawButtons();
-          
+            PlacePrefabV();
             GUILayout.BeginArea(spawnObjRect);
 
             if (prefabObjs.Count >0 )
@@ -104,7 +109,43 @@ namespace NameSpaceName {
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
-                    
+
+                   // for (int i = 0; i < prefabObjs.Count; i++)
+                   /// {
+                    int elementsInThisRow = 0;
+
+                    for (int k = 0; k < prefabObjs[j].Length; k++)
+                        {
+                        elementsInThisRow++;
+
+                        Texture prefabTexture = AssetPreview.GetAssetPreview(prefabObjs[j][k]);
+                            if(currentPrefab == prefabObjs[j][k])
+                            {
+                                if (GUILayout.Button(prefabTexture, GUILayout.MaxWidth(70), GUILayout.MaxHeight(70)))
+                                {
+                                    currentPrefab = prefabObjs[j][k]; // redundant sicne its already assigned
+                                    EditorWindow.FocusWindowIfItsOpen<SceneView>();
+                                }
+                            }
+                            else
+                            {
+                                if (GUILayout.Button(prefabTexture, GUILayout.MaxWidth(50), GUILayout.MaxHeight(50)))
+                                {
+                                    currentPrefab = prefabObjs[j][k];
+                                    EditorWindow.FocusWindowIfItsOpen<SceneView>();
+                                }
+                            }
+                        if (elementsInThisRow>=( Screen.width -20)/ 50)
+                        {
+                            elementsInThisRow = 0;
+                            GUILayout.EndHorizontal();
+                            GUILayout.BeginHorizontal();
+                        }
+                    }
+                   // }
+
+                    /*
+
                     if (prefabObjs.Count > 0)
                     {
                         for (int i = 0; i < prefabObjs[j].Length; i++)
@@ -116,7 +157,7 @@ namespace NameSpaceName {
                             }
                         }
                     }
-
+                    */
                     GUILayout.EndHorizontal();
                     GUILayout.Space(5);
 
@@ -172,6 +213,15 @@ namespace NameSpaceName {
             GUILayout.EndArea();
 
         }
+        void OnSceneGUI(SceneView sceneView)
+        {
+            PlacePrefabV();
+            Event e = Event.current;
+            if (e.isKey)
+                Debug.Log("Detected key code from Scene View: " + e.keyCode);
+        }
+      
+    
         #endregion
 
         #region Custom Methods
@@ -216,6 +266,72 @@ namespace NameSpaceName {
         void DrawButtons()
         {
 
+        }
+
+        void PlacePrefabV()
+        {
+
+            Handles.BeginGUI();
+            GUILayout.Box("Level Editor Mode");
+            if (currentPrefab == null)
+            {
+                GUILayout.Box("No prefab selected!");
+            }
+            Handles.EndGUI();
+
+
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.V)
+            {
+                Debug.Log("fool");
+                Vector3 mousePos = Event.current.mousePosition;
+                float ppp = EditorGUIUtility.pixelsPerPoint;
+                mousePos.y = Camera.current.pixelHeight - mousePos.y * ppp;
+                //  mousePos.x *= ppp;
+
+                Ray ray = Camera.current.ScreenPointToRay(mousePos);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    // levelMap.temp.transform.position = hit.point;
+                    Vector3 roundedPos = new Vector3(5 * Mathf.Round(hit.point.x / 5), 5 * Mathf.Round(hit.point.y / 5), 5 * Mathf.Round(hit.point.z / 5));
+                    Spawn(roundedPos);
+                    //  Debug.Log(hit.point);
+
+                    // if (!hit.transform.gameObject.CompareTag("Ball"))
+                    {
+                        // if (!hit.transform.gameObject.CompareTag("Ground"))
+                        {
+                            // spawnPosition = hit.transform.position;//   new Vector3(Mathf.Round(hit.point.x), Mathf.Round(hit.point.y), Mathf.Round(hit.point.z));
+                            //DestroyImmediate(hit.transform.gameObject);
+
+                            //    spawnPosition = new Vector3(Mathf.Round(hit.point.x), Mathf.Round(hit.point.y ), Mathf.Round(hit.point.z));
+
+                            // if (!hit.transform.gameObject.CompareTag(selectedPrefab.gameObject.tag))
+                            {
+                                //    Spawn(spawnPosition);
+
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        void Spawn(Vector3 _spawnPosition)
+        {
+            if (currentPrefab != null)
+            {
+               // if (levelMap.parent == null)
+                {
+                  //  GameObject gg = new GameObject("Environment");
+               //     levelMap.parent = gg.transform;
+                }
+                Debug.Log("fool");
+                GameObject goo = (GameObject)Instantiate(currentPrefab, new Vector3(_spawnPosition.x, _spawnPosition.y, _spawnPosition.z), Quaternion.identity);
+                currentPrefab = goo;
+                //  Selection.activeGameObject = goo;
+                goo.name = currentPrefab.name;
+            }
         }
         #endregion
 
