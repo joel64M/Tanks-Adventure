@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1290990221638483485}
   - component: {fileID: 4816051897016795876}
   - component: {fileID: 2149741492375017545}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fence2_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
