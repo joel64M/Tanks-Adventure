@@ -13,7 +13,6 @@ namespace NameSpaceName {
         float currentHealth = 0;
     
         bool isDead;
-
         //delegtes
         public event Action<float,float> HealthChangedAction;
         public event Action TankDestroyedAction;
@@ -22,6 +21,7 @@ namespace NameSpaceName {
         public Transform explosionTransform;
          ParticleSystem tankExplosionParticles;
         public AudioSource explosionAudioSource;
+        public Transform explosionDecalTransform;
         #endregion
 
         #region Builtin Methods
@@ -74,6 +74,10 @@ namespace NameSpaceName {
         #endregion
 
         #region Custom Methods
+        public  void SetTankHealth(float startHealth)
+        {
+            currentHealth = startingHealth = startHealth;
+        }
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
@@ -99,6 +103,8 @@ namespace NameSpaceName {
             tankExplosionParticles.transform.parent = null;
             tankExplosionParticles.gameObject.SetActive(true);
             tankExplosionParticles.Play();
+            explosionDecalTransform.gameObject.SetActive(true);
+            explosionDecalTransform.transform.parent = null;
             explosionAudioSource.Play();
             gameObject.SetActive(false);
         }

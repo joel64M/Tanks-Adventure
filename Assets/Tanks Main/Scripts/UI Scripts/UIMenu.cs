@@ -34,6 +34,14 @@ namespace NameSpaceName {
 
     #region Custom Methods
 
+        public void _LoadCurrentLevel()
+        {
+            if (Application.CanStreamedLevelBeLoaded(PlayerPrefs.GetInt("LEVEL").ToString()))
+            {
+                SceneManager.LoadScene(PlayerPrefs.GetInt("LEVEL").ToString());
+            }
+        }
+
         public void _LoadLevel()
         {
             string level = (EventSystem.current.currentSelectedGameObject.name);

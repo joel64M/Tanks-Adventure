@@ -23,8 +23,7 @@ namespace NameSpaceName
       public  MeshRenderer mr;
 
         #endregion
-
-
+   
         private void OnEnable()
         {
             mr = GetComponent<MeshRenderer>();

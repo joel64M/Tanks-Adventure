@@ -31,13 +31,16 @@ namespace NameSpaceName {
         //components
         TankInput tankInputScript;
         Rigidbody rb;
+        bool isNavMesh;
         #endregion
 
         #region Builtin Methods
 
+
         void Awake()
         {
             tankInputScript = GetComponent<TankInput>();
+         
             rb = GetComponent<Rigidbody>();
             originalPitch = movementAudioSource.pitch;
             
@@ -45,16 +48,19 @@ namespace NameSpaceName {
 
         void FixedUpdate()
         {
-            if (rb)
+            if (!isNavMesh)
             {
-                if (moveByForce)
+                if (rb)
                 {
-                    MoveByForce();
-                }
-                else
-                {
-                     Move();
-                     Turn();
+                    if (moveByForce)
+                    {
+                        MoveByForce();
+                    }
+                    else
+                    {
+                        Move();
+                        Turn();
+                    }
                 }
             }
             if(isAudio)
@@ -64,32 +70,15 @@ namespace NameSpaceName {
                 EngineAudio();
             }
         }
-        /*
-        void FixedUpdate()
-        {
-            
-        }
-
-        void LateUpdate()
-        {
-
-        }
-
-        void OnDisable()
-        {
-
-        }
-
-        void Destroy()
-        {
-
-        }
-        */
+  
         #endregion
 
         #region Custom Methods
 
-
+        public void SetAiTankMotor()
+        {
+            isNavMesh = true;
+        }
         void Move()
         {
             Vector3 movement = transform.forward * tankInputScript.VerticalInputValue * moveSpeed * Time.deltaTime;

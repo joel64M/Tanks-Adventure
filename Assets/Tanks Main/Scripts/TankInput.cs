@@ -33,6 +33,7 @@ namespace NameSpaceName {
             protected set;
             get;
         }
+        public EnemyProperties enemyProperty;
 
         //comopnents
         protected Camera cam;

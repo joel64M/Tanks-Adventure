@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tanks Main/Scene/4.unity
     guid: 5e7ab60cb5d4849869f55b0f26a824b2
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/5.unity
+    guid: 096bde136eff4409eae331a42744e6f1
   m_configObjects: {}

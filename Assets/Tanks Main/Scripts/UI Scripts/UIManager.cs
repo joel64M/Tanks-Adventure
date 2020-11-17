@@ -109,7 +109,7 @@ namespace NameSpaceName {
                     //pausePanel.SetActive(false);
                     break;
                 default:
-                    Debug.Log("lol say what??");
+                    Debug.Log("something is wrong i can feel it ");
                     break;
             }
         }

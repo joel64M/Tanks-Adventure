@@ -2,31 +2,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 namespace NameSpaceName {
 
     public class AITankInput : TankInput
     {
 
         #region Variables
-        public float distbtwn;
+         float distbtwn;
 
         public Transform target;
-        public Vector3 inputVec;
-        public Vector3 min,max;
+         Vector3 min,max;
+        NavMeshAgent agent;
 
         Vector3 destPos;
-        [Header("Adjustable AI Properties")]
-        public float minDisToPatrol = 5f;
-        public float minStoppingDist = 5f;
-        public float minDistToTriggerAttack = 20f;
 
-        //patrol
-        float waitTime ;
-        public float startWaitTime = 2f;
+       // [Header("Adjustable AI Properties")]
+         float minDisToPatrol = 5f;
+         float minStoppingDist = 5f;
+         float attackRadius = 20f;
+         float startDecisionForNextPointTime = 0;
+         float fireRate=0.2f;
 
-        //attack
-        float attackAfterTime;
+        float decisionForNextPointTime ;
+        float fireRateTime;
+        
         STATE currentState = STATE.patrol;
       [SerializeField]  [Flags]public enum STATE { patrol, retreat, atttack ,alert }
     #endregion
@@ -36,16 +36,46 @@ namespace NameSpaceName {
         protected override void Awake()
         {
             base.Awake();
-            destPos = FindRandomPos();
             target = GameObject.FindGameObjectWithTag("Player").transform;
-            waitTime = startWaitTime;
+            if (enemyProperty)
+            {
+                minDisToPatrol = enemyProperty.minDisToPatrol;
+                minStoppingDist = enemyProperty.minStoppingDist;
+                attackRadius = enemyProperty.attackRadius;
+                startDecisionForNextPointTime = enemyProperty.startDecisionForNextPointTime;
+                fireRate = enemyProperty.fireRate;
+                GetComponent<NavMeshAgent>().speed = enemyProperty.maxSpeed;
+                GetComponent<NavMeshAgent>().acceleration = enemyProperty.maxSpeed;
+                GetComponent<NavMeshAgent>().stoppingDistance = minStoppingDist;
 
+                //double missile
+                GetComponent<TankHealth>().SetTankHealth(enemyProperty.startHealth);
+                GetComponent<TankMotor>().SetAiTankMotor();
+                GetComponent<TankWeapon>().SetTankWeapon(enemyProperty.doubleMissile);
+            }
+            decisionForNextPointTime = startDecisionForNextPointTime;
+            agent = GetComponent<NavMeshAgent>();
+            if (GetComponent<PatrolZone>())
+            {
+                min.x = GetComponent<PatrolZone>().point1.x;
+                min.z = GetComponent<PatrolZone>().point2.z;
+                max.z = GetComponent<PatrolZone>().point1.z;
+                max.x = GetComponent<PatrolZone>().point2.x;
+            }
+
+        }
+        private void Start()
+        {
+            destPos = FindRandomPos();
 
         }
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube((min+max)/2,(max-min));
+            /// Gizmos.DrawWireCube((min+max)/2,(max-min));
+            Gizmos.DrawWireSphere(transform.position, attackRadius);
+           // Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(destPos, 1f);
         }
    
         protected override void Update()
@@ -54,7 +84,7 @@ namespace NameSpaceName {
            //     return;
             if(target)
             distbtwn = Vector3.Distance(transform.position, target.position);
-            if (distbtwn < minDistToTriggerAttack && currentState !=STATE.alert && target.gameObject.activeSelf)
+            if (distbtwn < attackRadius && currentState !=STATE.alert && target.gameObject.activeSelf)
             {
               currentState |= STATE.alert;
             }
@@ -62,7 +92,8 @@ namespace NameSpaceName {
             {
                 currentState &= ~STATE.alert;
             }
-            Debug.DrawLine(transform.position, destPos, Color.blue);
+            Debug.DrawLine(transform.position, destPos, Color.red);
+           
             if (currentState == STATE.patrol)
             {
                 Patrol();
@@ -80,26 +111,7 @@ namespace NameSpaceName {
             }
         }
 
-        void FixedUpdate()
-        {
-            
-        }
-
-        void LateUpdate()
-        {
-
-        }
-
-        void OnDisable()
-        {
-
-        }
-
-        void Destroy()
-        {
-
-        }
-
+  
         #endregion
 
         #region Custom Methods
@@ -107,15 +119,15 @@ namespace NameSpaceName {
         {
             if (target.gameObject.activeSelf)
             {
-                if (attackAfterTime <= 0)
+                if (fireRateTime <= 0)
                 {
                     IsFire = true;
                     FirePos = target.position;
-                    attackAfterTime = UnityEngine.Random.Range(0.1f, 0.3f);
+                    fireRateTime = UnityEngine.Random.Range(fireRate - 0.1f,fireRate + 0.1f);
                 }
                 else
                 {
-                    attackAfterTime -= Time.deltaTime;
+                    fireRateTime -= Time.deltaTime;
                     IsFire = false;
                 }
             }
@@ -125,24 +137,26 @@ namespace NameSpaceName {
         {
             if (Vector3.Distance(transform.position, destPos) < minStoppingDist)
             {
-                HorizontalInputValue = 0;
-                VerticalInputValue = 0;
-                if (waitTime <= 0)
+               // HorizontalInputValue = 0;
+               // VerticalInputValue = 0;
+                if (decisionForNextPointTime <= 0)
                 {
-                    waitTime = startWaitTime;
+                    decisionForNextPointTime = startDecisionForNextPointTime;
                     FirePos = destPos = FindRandomPos();
                 }
                 else
                 {
-                    waitTime -= Time.deltaTime;
+                    FirePos = Vector3.zero;
+                    decisionForNextPointTime -= Time.deltaTime;
                 }
             }
             else
             {
-                inputVec = destPos - transform.position;
-                inputVec.Normalize();
-                HorizontalInputValue = inputVec.x;
-                VerticalInputValue = inputVec.z;
+                //  inputVec = destPos - transform.position;
+                //  inputVec.Normalize();
+                //  HorizontalInputValue = inputVec.x;
+                //  VerticalInputValue = inputVec.z;
+                agent.SetDestination(destPos);
             }
         }
       

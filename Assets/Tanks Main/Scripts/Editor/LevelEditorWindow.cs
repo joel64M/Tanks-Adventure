@@ -20,30 +20,25 @@ namespace NameSpaceName {
 
         GameObject parentGameobject = null;
         bool isSnap = false;
+        bool isRotateFence = false;
+        bool isRandomRotation = false;
+
         int snapMultiple = 5;
         float rotateMultiple = 45f;
 
-        List<GameObject[]> prefabObjs = new List<GameObject[]>();
-        GUISkin skin;
-        List<string> prefabPaths = new List<string>();
-        GameObject currentPrefab;
+        List<GameObject[]> prefabObjs = new List<GameObject[]>();  // what is a prefabObjs ? => 
+        GUISkin skin;                                                   // font
+        List<string> prefabPaths = new List<string>();            // just the nme of folder i suppose 
+        GameObject currentPrefab;                                // but why ? 
 
         #endregion
 
         #region Builtin Methods
 
-        [MenuItem("Editor/LevelEditor")]
-        static void ShowWindow() // custom method
-        {
-            LevelEditorWindow window = GetWindow<LevelEditorWindow>("Level Editor");
-            window.minSize = new Vector2(300, 200);
-            window.Show();
-        }
-
         
         private void OnEnable()
         {
-            SceneView.duringSceneGui += this.OnSceneGUI;
+            SceneView.duringSceneGui += this.OnSceneGUI;  // for the inputs
 
             InitTextures();
             skin = Resources.Load<GUISkin>("GuiSkins/LevelEditorSkin");
@@ -53,24 +48,26 @@ namespace NameSpaceName {
                 for (int i = 0; i < PlayerPrefs.GetInt("PathCount"); i++)
                 {
                     string str = PlayerPrefs.GetString("Path" + (i).ToString());
-                    Debug.Log("Loading as ... path" + (i).ToString() + " :" + str);
+                   // Debug.Log("Loading as ... path" + (i).ToString() + " :" + str);
                     prefabPaths.Add(str);
                     GameObject[] gos = Resources.LoadAll<GameObject>(prefabPaths[i]);
                     prefabObjs.Add(gos);
                 }
             }
         }
+
         void OnDisable() { SceneView.duringSceneGui -= this.OnSceneGUI; }
+        Vector2 scrollPos;
 
         private void OnGUI()
         {
             DrawLayouts();
             DrawHeader();
-            DrawButtons();
-           // PlacePrefabV();
-            
+         
             GUILayout.BeginArea(spawnObjRect);
 
+            scrollPos =
+                  EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(Screen.width), GUILayout.Height(200));
             if (prefabObjs.Count >0 )
             {
                 for (int j = 0; j < prefabObjs.Count; j++)
@@ -81,54 +78,31 @@ namespace NameSpaceName {
                     float tempWidth = Screen.width / columns;
 
                     GUILayout.Label(prefabPaths[j], skin.GetStyle("Name"));
-                    //{
-
-                   // }
 
                     if (GUILayout.Button("Delete", GUILayout.Width(tempWidth)))
                     {
-                       // Debug.Log("************"+prefabObjs.Count);
                         prefabPaths.RemoveAt(j);
                         prefabObjs.RemoveAt(j);
-                     //   Debug.Log("************" + prefabObjs.Count);
-
                         PlayerPrefs.DeleteKey("Path" + j.ToString());
-                     //   List<GameObject[]> tempList = prefabObjs;
-                       // prefabObjs = tempList;
-                       // List<string> tempList2 = prefabPaths;
-                       // prefabPaths = tempList2;
-                      //  Debug.Log(PlayerPrefs.GetString("Path0"));
-                       // Debug.Log(PlayerPrefs.GetString("Path1"));
-                        foreach (var item in prefabPaths)
-                        {
-                         //   Debug.Log(item);
-                        }
-                        ///
+
                         ///  have to order  the list and save it again 
-                        //
                         for (int i = 0; i < prefabPaths.Count; i++)
                         {
                             PlayerPrefs.SetString("Path" + i.ToString(), prefabPaths[i]);
                         }
                         PlayerPrefs.SetInt("PathCount", prefabPaths.Count);
                         PlayerPrefs.Save();
-                        // Debug.Log("path count after deleting" + PlayerPrefs.GetInt("PathCount"));
-
                         break;
                     }
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
-
-                   // for (int i = 0; i < prefabObjs.Count; i++)
-                   /// {
                     int elementsInThisRow = 0;
 
                     for (int k = 0; k < prefabObjs[j].Length; k++)
                         {
-                        elementsInThisRow++;
-
-                        Texture prefabTexture = AssetPreview.GetAssetPreview(prefabObjs[j][k]);
+                             elementsInThisRow++;
+                             Texture prefabTexture = AssetPreview.GetAssetPreview(prefabObjs[j][k]);
                             if(currentPrefab == prefabObjs[j][k])
                             {
                                 if (GUILayout.Button(prefabTexture, GUILayout.MaxWidth(70), GUILayout.MaxHeight(70)))
@@ -152,35 +126,19 @@ namespace NameSpaceName {
                             GUILayout.BeginHorizontal();
                         }
                     }
-                   // }
-
-                    /*
-
-                    if (prefabObjs.Count > 0)
-                    {
-                        for (int i = 0; i < prefabObjs[j].Length; i++)
-                        {
-                            Texture prefabTexture = AssetPreview.GetAssetPreview(prefabObjs[j][i]);
-                            if (GUILayout.Button(prefabTexture, GUILayout.MaxWidth(50), GUILayout.MaxHeight(50)))
-                            {
-                                EditorWindow.FocusWindowIfItsOpen<SceneView>();
-                            }
-                        }
-                    }
-                    */
                     GUILayout.EndHorizontal();
                     GUILayout.Space(5);
-
                 }
             }
-            GUILayout.Space(5);
+            EditorGUILayout.EndScrollView();
+            GUILayout.Space(2);
+
             if (GUILayout.Button("Add Prefabs"))
             {
                 string str  = EditorUtility.OpenFolderPanel("Select Path", "Assets", "what does this do lol ?");
                 DirectoryInfo dir = new DirectoryInfo(str);
                 DirectoryInfo[] info = dir.GetDirectories("*.*");
                 int count = dir.GetDirectories().Length;
-               // Debug.Log(count);
                 if (count == 0)
                 {
                     string st = (Path.GetFileName(Path.GetFullPath(dir.ToString()).TrimEnd(Path.DirectorySeparatorChar)));
@@ -191,7 +149,6 @@ namespace NameSpaceName {
                         return;
                     }
                     prefabObjs.Add(gos);
-                  //  Debug.Log("Saving as ...path" + (prefabObjs.Count).ToString() + " :" + st);
                     PlayerPrefs.SetString("Path" + (prefabObjs.Count-1).ToString(), st);
                     PlayerPrefs.SetInt("PathCount", PlayerPrefs.GetInt("PathCount") + 1);
                     PlayerPrefs.Save();
@@ -208,43 +165,47 @@ namespace NameSpaceName {
                             return;
                         }
                         prefabObjs.Add(gos);
-
-                        Debug.Log("Saving as ...path"+(  prefabObjs.Count-1).ToString() + " :" + st);
+                        // Debug.Log("Saving as ...path"+(  prefabObjs.Count-1).ToString() + " :" + st);
                         PlayerPrefs.SetString("Path" +(prefabObjs.Count-1).ToString(), st);
-
-                      //  Debug.Log(PlayerPrefs.GetString("Path0"));
-                      //  Debug.Log(PlayerPrefs.GetString("Path1"));
                         PlayerPrefs.SetInt("PathCount", PlayerPrefs.GetInt("PathCount") + 1);
                         PlayerPrefs.Save();
                     }
                 }
             }
-
             GUILayout.EndArea();
-
         }
+
         void OnSceneGUI(SceneView sceneView)
         {
             PlacePrefab();
             RotateThatPrefab();
-          
+            DeletePrefab();
         }
-      
-    
+        
         #endregion
 
         #region Custom Methods
+
+        
+        [MenuItem("Editor/LevelEditor")]
+        static void ShowWindow() 
+        {
+            LevelEditorWindow window = GetWindow<LevelEditorWindow>("Level Editor");
+            window.minSize = new Vector2(300, 200);
+            window.Show();
+        }
+
         void InitTextures()
         {
             headerSectionTexture = new Texture2D(1, 1);
             headerSectionTexture.SetPixel(0, 0, Color.red);
             headerSectionTexture.Apply();
-
+           
             parentSectionTexture = new Texture2D(1, 1);
             parentSectionTexture.SetPixel(0, 0, Color.yellow);
             parentSectionTexture.Apply();
             //or
-            //  headerSectionTexture = Resources.Load<Texture2D>("grass");
+            //headerSectionTexture = Resources.Load<Texture2D>("grass");
         }
 
         void DrawLayouts()
@@ -267,55 +228,44 @@ namespace NameSpaceName {
             spawnObjRect.height = 600f;
             GUI.DrawTexture(spawnObjRect, new Texture2D(1, 1));
 
-
-          //  addPrefabsButonRect.x = 0f;
-          //  addPrefabsButonRect.y = 0f;
-           // addPrefabsButonRect.width = 90f;
-           // addPrefabsButonRect.height = 50f;
-           // GUI.DrawTexture(addPrefabsButonRect, new Texture2D(1, 1));
-
         }
+
         void DrawHeader()
         {
             GUILayout.BeginArea(headerSectionRect);
-            GUILayout.Label("Noob Level Editor",skin.GetStyle("Header1"));
+            GUILayout.Label("Level Editor",skin.GetStyle("Header1"));
             GUILayout.EndArea();
 
             GUILayout.BeginArea(parentSectionRect);
 
                 GUILayout.BeginHorizontal();
-                    GUILayout.Label("Parent of spawned gameobjects");
-                    parentGameobject = (GameObject)EditorGUILayout.ObjectField(parentGameobject, typeof(GameObject), true);
+                GUILayout.Label("Parent of spawned gameobjects");
+                parentGameobject = (GameObject)EditorGUILayout.ObjectField(parentGameobject, typeof(GameObject), true);
                 GUILayout.EndHorizontal();
 
-                    if (GUILayout.Button("Create Empty Parent GameObject"))
-                    {
-                        GameObject go = new GameObject("Parent");
-                        parentGameobject = go;
-                    }
+                if (GUILayout.Button("Create Empty Parent GameObject"))
+                {
+                    GameObject go = new GameObject("Parent");
+                    parentGameobject = go;
+                }
 
                 GUILayout.BeginHorizontal();
-                    GUILayout.Label("Snap", GUILayout.Width(35f));
-                    isSnap = EditorGUILayout.Toggle(isSnap, GUILayout.Width(15f));
-                    GUILayout.Label("Snap Multiple", GUILayout.Width(80f));
-                    snapMultiple = EditorGUILayout.IntField( snapMultiple,GUILayout.Width(35f));
+                GUILayout.Label("Snap", GUILayout.Width(35f));
+                isSnap = EditorGUILayout.Toggle(isSnap, GUILayout.Width(15f));
+            GUILayout.Label("Random Rotation", GUILayout.Width(85f));
+            isRandomRotation = EditorGUILayout.Toggle(isRandomRotation, GUILayout.Width(15f));
+            GUILayout.Label("Rotate Fence", GUILayout.Width(85f));
+            isRotateFence = EditorGUILayout.Toggle(isRotateFence, GUILayout.Width(15f));
+            GUILayout.Label("Snap Multiple", GUILayout.Width(80f));
+                snapMultiple = EditorGUILayout.IntField( snapMultiple,GUILayout.Width(35f));
                 GUILayout.EndHorizontal();
 
             GUILayout.EndArea();
-
-
-
         }
-
-        void DrawButtons()
-        {
-
-        }
-
 
         Vector3 snappedRotationValue;
-        Vector3[] snappedRotationAmount = { new Vector3(1.5f, 0, -1.5f) , new Vector3(1.5f,0,1.5f), new Vector3(-1.5f, 0, 1.5f), new Vector3(-1.5f, 0, -1.5f), new Vector3(0, 0,0) };
-        float[] snappedRotationAngle = {45f, -45, 45, -45,0};
+        Vector3[] snappedRotationAmount = { new Vector3(-2.5f, 0, -2.5f) , new Vector3(-2.5f,0,2.5f), new Vector3(2.5f, 0, 2.5f), new Vector3(2.5f, 0, -2.5f), new Vector3(0, 0,0) , new Vector3(0,0,0)};
+        float[] snappedRotationAngle = {45f, -45, 45, -45,0,90};
         int snapRotationIndex = 0;
         GameObject currentSpawnedGO;
 
@@ -324,8 +274,10 @@ namespace NameSpaceName {
     
         void RotateThatPrefab()
         {
-            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.F)
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.S)
             {
+
+
                 Vector3 mousePos = Event.current.mousePosition;
                 float ppp = EditorGUIUtility.pixelsPerPoint;
                 mousePos.y = Camera.current.pixelHeight - mousePos.y * ppp;
@@ -335,29 +287,67 @@ namespace NameSpaceName {
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit,5000,~LayerMask.GetMask("Ground")))
                 {
-                    Debug.Log(hit.transform.gameObject.name);
+                  //  Debug.Log(hit.transform.gameObject.name);
                     if(selectedGO!=hit.transform.gameObject)
                     defaultPosition = hit.transform.position;
                     selectedGO = hit.transform.gameObject;
 
-
-                    snappedRotationValue = new Vector3(Mathf.Abs(defaultPosition.x), 0, Mathf.Abs(defaultPosition.z));
-                    Debug.Log(snappedRotationValue);
-                    float signZ = Mathf.Sign(defaultPosition.z);
-                    float signX = Mathf.Sign(defaultPosition.x);
-                    Debug.Log(signX + " " + signZ);
-                    snappedRotationValue += snappedRotationAmount[snapRotationIndex];
-                    Debug.Log(snappedRotationValue);
-                    selectedGO.transform.position = new Vector3(snappedRotationValue.x * signX, 0, snappedRotationValue.z * signZ);
-
-                    selectedGO.transform.eulerAngles = new Vector3(0, snappedRotationAngle[snapRotationIndex], 0);
-                    snapRotationIndex++;
-                    if (snapRotationIndex >= 5)
+                    if (isRotateFence)
                     {
-                        snapRotationIndex = 0;
+                        snappedRotationValue = new Vector3((defaultPosition.x), 0, (defaultPosition.z));
+
+                        snapRotationIndex++;
+                        if (snapRotationIndex >= 6)
+                        {
+                            snapRotationIndex = 0;
+                        }
+                           Debug.Log(snappedRotationValue);
+                        float signZ = Mathf.Sign(defaultPosition.z);
+                        float signX = Mathf.Sign(defaultPosition.x);
+                        // Debug.Log(signX + " " + signZ);
+                        snappedRotationValue += snappedRotationAmount[snapRotationIndex];
+                        //  Debug.Log(snappedRotationValue);
+                        selectedGO.transform.position = new Vector3(snappedRotationValue.x , 0, snappedRotationValue.z );
+
+                        selectedGO.transform.eulerAngles = new Vector3(0, snappedRotationAngle[snapRotationIndex], 0);
                     }
+                    else 
+                    {
+
+                        selectedGO.transform.eulerAngles = new Vector3(0, Random.Range(0,360f), 0);
+
+                    }
+
+
                 }
-            
+            }
+        }
+        void DeletePrefab()
+        {
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.D)
+            {
+
+
+                Vector3 mousePos = Event.current.mousePosition;
+                float ppp = EditorGUIUtility.pixelsPerPoint;
+                mousePos.y = Camera.current.pixelHeight - mousePos.y * ppp;
+                //  mousePos.x *= ppp;
+
+                Ray ray = Camera.current.ScreenPointToRay(mousePos);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 5000, ~LayerMask.GetMask("Ground")))
+                {
+                    //  Debug.Log(hit.transform.gameObject.name);
+                    if (selectedGO != hit.transform.gameObject)
+                        defaultPosition = hit.transform.position;
+                    selectedGO = hit.transform.gameObject;
+
+                    DestroyImmediate(selectedGO);
+
+                 
+
+
+                }
             }
         }
         void PlacePrefab()
@@ -370,9 +360,10 @@ namespace NameSpaceName {
             }
             Handles.EndGUI();
 
-
-            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.V)
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.A)
             {
+                if(!currentPrefab.gameObject)
+                    return;
                 Vector3 mousePos = Event.current.mousePosition;
                 float ppp = EditorGUIUtility.pixelsPerPoint;
                 mousePos.y = Camera.current.pixelHeight - mousePos.y * ppp;
@@ -387,7 +378,6 @@ namespace NameSpaceName {
                     bool samePrefabUnder = false;
                     foreach (var objs in sphereHits)
                     {
-
                         if(objs.transform.gameObject.layer == currentPrefab.gameObject.layer)
                         {
                             samePrefabUnder = true;
@@ -402,16 +392,12 @@ namespace NameSpaceName {
                         else
                         {
                          //   Debug.Log("no same"+ objs.transform.gameObject.name + " = " + currentPrefab.gameObject.name);
-
                         }
                     }
-
                     if (!samePrefabUnder)
                     {
                         Spawn(roundedPos);
-                    }
-               
-
+                    }               
                 }
             }
         }
@@ -420,15 +406,12 @@ namespace NameSpaceName {
         {
             if (currentPrefab != null)
             {
-               // if (levelMap.parent == null)
-                {
-                  //  GameObject gg = new GameObject("Environment");
-               //     levelMap.parent = gg.transform;
-                }
-             GameObject tempGo =  (GameObject) PrefabUtility.InstantiatePrefab(currentPrefab);
+                GameObject tempGo =  (GameObject) PrefabUtility.InstantiatePrefab(currentPrefab);
                 currentSpawnedGO = tempGo;
                 tempGo.transform.position = _spawnPosition;
-                if(parentGameobject!=null)
+                if(isRotateFence)
+                tempGo.transform.eulerAngles = new Vector3(0, snappedRotationAngle[snapRotationIndex], 0);
+                if (parentGameobject!=null)
                     tempGo.transform.SetParent(parentGameobject.transform);
                 // currentPrefab = goo;
                 //  Selection.activeGameObject = goo;
@@ -436,6 +419,5 @@ namespace NameSpaceName {
             }
         }
         #endregion
-
     }
 }

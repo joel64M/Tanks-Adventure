@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.LWRP;
 using UnityEngine.Rendering.Universal;
-
+using UnityEngine.SceneManagement;
 namespace NameSpaceName {
 
     public class SettingsScript : MonoBehaviour
@@ -33,7 +33,7 @@ namespace NameSpaceName {
                 DontDestroyOnLoad(this.gameObject);
             }
         }
-
+     
         void OnEnable()
         {
 

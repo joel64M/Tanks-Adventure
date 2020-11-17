@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 namespace NameSpaceName {
   public enum GAMESTATE { paused,  play, dialogue, levelComplete, levelFailed }
 
@@ -32,6 +33,7 @@ namespace NameSpaceName {
             enemyCount = enemyHealths.Count;
             levelNo = int.Parse(SceneManager.GetActiveScene().name);
             allas = FindObjectsOfType<AudioSource>() ;
+          // NavMeshBuilder.BuildNavMesh();
         }
 
         void OnEnable()
@@ -47,6 +49,8 @@ namespace NameSpaceName {
         void Start()
         {
            SetGameState(GAMESTATE.play);
+            SdkScript.instance.OnGameStartUA(levelNo);
+            SdkScript.instance.LogLevelStartedEventFB(levelNo);
         }
 
         void OnDisable()
@@ -78,14 +82,19 @@ namespace NameSpaceName {
         void OnLevelFailed()
         {
             Invoke("OnLevelFailedDelay", 1.5f);
+            SdkScript.instance.OnGameOverUA(levelNo);
+            SdkScript.instance.LogLevelFailedEventFB(levelNo);
         }
         void OnLevelFailedDelay()
         {
             SetGameState(GAMESTATE.levelFailed);
+
         }
         private void OnLevelComplete()
         {
             Invoke("OnLevelCompleteDelay", 1.5f);
+            SdkScript.instance.OnGameCompleteUA(levelNo);
+            SdkScript.instance.LogLevelCompleteEventFB(levelNo);
         }
         void OnLevelCompleteDelay()
         {
@@ -132,6 +141,8 @@ namespace NameSpaceName {
         //Scene Management
         public void RestartLevel()
         {
+            SdkScript.instance.OnGameRestartUA(levelNo);
+            SdkScript.instance.LogLevelRestartedEventFB(levelNo);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         public void GoToNextLevel()

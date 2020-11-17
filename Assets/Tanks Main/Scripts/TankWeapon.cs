@@ -12,6 +12,8 @@ namespace NameSpaceName {
         [Header("Turret Propeties")]
         public Transform turret;
         public Transform firePoint;
+        public Transform firePoint2;
+
         public float turretDegPerSecSpeed = 60f;
         //missile properties
         public float missileFireRate = 1f;
@@ -29,10 +31,12 @@ namespace NameSpaceName {
 
         bool canFire = true;
       public  bool isTurretRotated = true;
-
+        DoubleMissile doubleMissileType =DoubleMissile.none;
         //components
         Camera cam;
-       public TankInput tankInputScript;
+        bool flipTurret = false;
+        bool nextTurretFlip = false;
+        public TankInput tankInputScript;
         #endregion
 
         #region Builtin Methods
@@ -40,6 +44,7 @@ namespace NameSpaceName {
         void Start()
         {
            tankInputScript = GetComponent<TankInput>();
+       
             CreateMissileParent();
             CreateMissilePool();
         }
@@ -61,9 +66,21 @@ namespace NameSpaceName {
     #endregion
 
     #region Custom Methods
-       
+        public void SetTankWeapon(DoubleMissile dm)
+        {
+           
+                doubleMissileType = dm;
+
+            if (doubleMissileType == DoubleMissile.doubleMissile)
+            {
+                flipTurret = true;
+                nextTurretFlip = true;
+            }
+        }
         void HandleTurret()
         {
+            if (tankInputScript.FirePos == Vector3.zero)
+                return;
 
             //calculate direction to the firepos
             turretDirectionVector = tankInputScript.FirePos- transform.position;
@@ -112,7 +129,6 @@ namespace NameSpaceName {
         [SerializeField] int missileAmount = 40;
         int missileIndex=0;
         List<GameObject> missilePool = new List<GameObject>();
-
         void GetMissileFromPool()
         {
             if (missilePool[missileIndex].activeSelf)
@@ -121,13 +137,47 @@ namespace NameSpaceName {
                 missileIndex = missileAmount;
                 missileAmount++;
             }
-            missilePool[missileIndex].transform.position = firePoint.position;
+            if (flipTurret)
+            {
+                if (nextTurretFlip)
+                {
+                    nextTurretFlip = false;
+                    missilePool[missileIndex].transform.position = firePoint.position;
+                }
+                else if(!nextTurretFlip)
+                {
+                    nextTurretFlip = true;
+                    missilePool[missileIndex].transform.position = firePoint2.position;
+                }
+            }
+            else
+            {
+                missilePool[missileIndex].transform.position = firePoint.position;
+            }
             missilePool[missileIndex].transform.rotation = Quaternion.LookRotation(tankInputScript.FirePos - transform.position);
             missilePool[missileIndex].SetActive(true);
             missileIndex++;
             if (missileIndex >= missileAmount)
             {
                 missileIndex = 0;
+            }
+
+            if(doubleMissileType == DoubleMissile.doubleMissileSameTime)
+            {
+                if (missilePool[missileIndex].activeSelf)
+                {
+                    CreateSingleMissile();
+                    missileIndex = missileAmount;
+                    missileAmount++;
+                }
+                missilePool[missileIndex].transform.position = firePoint2.position;
+                missilePool[missileIndex].transform.rotation = Quaternion.LookRotation(tankInputScript.FirePos - transform.position);
+                missilePool[missileIndex].SetActive(true);
+                missileIndex++;
+                if (missileIndex >= missileAmount)
+                {
+                    missileIndex = 0;
+                }
             }
         }
 
