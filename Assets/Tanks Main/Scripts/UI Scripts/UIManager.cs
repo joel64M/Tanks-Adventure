@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System;
+
 namespace NameSpaceName {
 
     public class UIManager : MonoBehaviour
@@ -14,13 +17,14 @@ namespace NameSpaceName {
 
         [Header("UI Properties")]
         public Slider healthSlider;
-
+        public TextMeshProUGUI countdownText;
 
         [Header("Panels")]
         public GameObject gamePlayPanel;
         public GameObject levelFailedPanel;
         public GameObject levelCompletePanel;
         public GameObject pausePanel;
+        public GameObject startButton;
         #endregion
 
         #region Builtin Methods
@@ -39,7 +43,12 @@ namespace NameSpaceName {
             pausePanel.SetActive(false);
 
         }
-
+        private void Start()
+        {
+            countdownText.gameObject.SetActive(false);
+            startButton.SetActive(false);
+            gm.SetGameState(GAMESTATE.play);
+        }
         void OnEnable()
         {
             playerTankHealth.HealthChangedAction += UpdateUI;
@@ -56,14 +65,48 @@ namespace NameSpaceName {
 
         #region Custom Methods
         //buttons
+        public void _StartGame()
+        {
+            startButton.SetActive(false);
+            StartCoroutine(Countdown());
+        }
         public void _PauseButton()
         {
             gm.SetGameState(GAMESTATE.paused);
         }
         public void _ResumeButton()
         {
-            print("resume");
             gm.SetGameState(GAMESTATE.play);
+        }
+        public void _ReveiveAdButton()
+        {
+            //if (Advertisements.Instance.IsRewardVideoAvailable())
+            {
+                Advertisements.Instance.ShowRewardedVideo(VideoComplete);
+            }
+        }
+
+        private void VideoComplete(bool completed)
+        {
+            if (completed)
+            {
+                _Respawn();
+
+            }
+            else
+            {
+                gm.SetGameState(GAMESTATE.levelFailed);
+            }
+        }
+
+        public void _Respawn()
+        {
+
+            levelFailedPanel.SetActive(false);
+            playerTankHealth.ResestHealth();
+
+            startButton.SetActive(true);
+
         }
         public void _RestartButton()
         {
@@ -77,7 +120,19 @@ namespace NameSpaceName {
         {
             gm.GoToMainMenu();
         }
-
+        IEnumerator Countdown()
+        {
+            countdownText.gameObject.SetActive(true);
+            countdownText.text = 3.ToString();
+            yield return new WaitForSecondsRealtime(1f);
+            countdownText.text = (2).ToString();
+            yield return new WaitForSecondsRealtime(1f);
+            countdownText.text = (1).ToString();
+            yield return new WaitForSecondsRealtime(1f);
+            countdownText.text = (0).ToString();
+            countdownText.gameObject.SetActive(false);
+            gm.SetGameState(GAMESTATE.play);
+        }
 
         void UpdateUI(float currentHealth,float maxHealth)
         {

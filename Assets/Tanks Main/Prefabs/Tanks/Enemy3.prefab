@@ -28950,6 +28950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyProperty: {fileID: 11400000, guid: c46faffca4a904d69ba886bd63c8c9af, type: 2}
   target: {fileID: 0}
+  destPos: {x: 0, y: 0, z: 0}
 --- !u!195 &1145967281
 NavMeshAgent:
   m_ObjectHideFlags: 0

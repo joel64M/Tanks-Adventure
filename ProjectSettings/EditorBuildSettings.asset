@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Tanks Main/Scene/Menu.unity
-    guid: 5629f78add9cf4b4497b6a5fed696097
+    guid: e2330439cc9f647ec88d1ee13eda9b30
   - enabled: 1
     path: Assets/Tanks Main/Scene/1.unity
     guid: a8ad2af54c0904d2bb022a4ad4ad4c6a
@@ -23,4 +23,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tanks Main/Scene/5.unity
     guid: 096bde136eff4409eae331a42744e6f1
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/6.unity
+    guid: c7eebec07d03f41adac7b5a7bb5eecdc
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/7.unity
+    guid: a35649adeb3614d0e8f7c3235a98b70c
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/8.unity
+    guid: 406540b67a4684dd784a1eb06cf3390e
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/9.unity
+    guid: dc98a43b2202948179f8d63273257c3f
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/10.unity
+    guid: 8df5b1a65aee746ebb1043eb668c4c1c
+  - enabled: 1
+    path: Assets/Tanks Main/Scene/11.unity
+    guid: 5482f12c890ea453baaafa586e2bbdb6
   m_configObjects: {}

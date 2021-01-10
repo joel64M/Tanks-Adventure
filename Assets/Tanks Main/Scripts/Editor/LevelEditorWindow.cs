@@ -180,6 +180,7 @@ namespace NameSpaceName {
             PlacePrefab();
             RotateThatPrefab();
             DeletePrefab();
+            QuickRotate();
         }
         
         #endregion
@@ -274,7 +275,7 @@ namespace NameSpaceName {
     
         void RotateThatPrefab()
         {
-            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.S)
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Q)
             {
 
 
@@ -318,6 +319,41 @@ namespace NameSpaceName {
 
                     }
 
+
+                }
+            }
+        }
+        void QuickRotate()
+        {
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Z)
+            {
+                if (selectedGO != currentSpawnedGO.transform.gameObject)
+                    defaultPosition = currentSpawnedGO.transform.position;
+                selectedGO = currentSpawnedGO.transform.gameObject;
+
+                if (isRotateFence)
+                {
+                    snappedRotationValue = new Vector3((defaultPosition.x), 0, (defaultPosition.z));
+
+                    snapRotationIndex++;
+                    if (snapRotationIndex >= 6)
+                    {
+                        snapRotationIndex = 0;
+                    }
+                    // Debug.Log(snappedRotationValue);
+                    float signZ = Mathf.Sign(defaultPosition.z);
+                    float signX = Mathf.Sign(defaultPosition.x);
+                    // Debug.Log(signX + " " + signZ);
+                    snappedRotationValue += snappedRotationAmount[snapRotationIndex];
+                    //  Debug.Log(snappedRotationValue);
+                    selectedGO.transform.position = new Vector3(snappedRotationValue.x, 0, snappedRotationValue.z);
+
+                    selectedGO.transform.eulerAngles = new Vector3(0, snappedRotationAngle[snapRotationIndex], 0);
+                }
+                else
+                {
+
+                    selectedGO.transform.eulerAngles = new Vector3(0, Random.Range(0, 360f), 0);
 
                 }
             }
@@ -373,8 +409,8 @@ namespace NameSpaceName {
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Vector3 roundedPos = new Vector3(5 * Mathf.Round(hit.point.x / 5), 5 * Mathf.Round(hit.point.y / 5), 5 * Mathf.Round(hit.point.z / 5));
-                    RaycastHit[] sphereHits =  (Physics.SphereCastAll(roundedPos, 1.5f, ray.direction));
+                    Vector3 roundedPos = new Vector3(snapMultiple * Mathf.Round(hit.point.x / snapMultiple), snapMultiple * Mathf.Round(hit.point.y / snapMultiple), snapMultiple * Mathf.Round(hit.point.z / snapMultiple));
+                    RaycastHit[] sphereHits =  (Physics.SphereCastAll(roundedPos, snapMultiple/2f, ray.direction));
                     bool samePrefabUnder = false;
                     foreach (var objs in sphereHits)
                     {
@@ -416,6 +452,7 @@ namespace NameSpaceName {
                 // currentPrefab = goo;
                 //  Selection.activeGameObject = goo;
                 tempGo.name = currentPrefab.name ;
+                EditorUtility.SetDirty(tempGo);
             }
         }
         #endregion

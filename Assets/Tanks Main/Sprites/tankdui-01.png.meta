@@ -1,0 +1,610 @@
+fileFormatVersion: 2
+guid: e3c6ef46d491c4b90bc9518759474c9b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1698037273229613748
+    second: tankdui-01_0
+  - first:
+      213: 1240269286499541334
+    second: tankdui-01_1
+  - first:
+      213: 154613566573952175
+    second: tankdui-01_2
+  - first:
+      213: -1170894418630461522
+    second: tankdui-01_3
+  - first:
+      213: -526059431488734741
+    second: tankdui-01_4
+  - first:
+      213: -9190549834649529032
+    second: tankdui-01_5
+  - first:
+      213: 6407274784878850804
+    second: tankdui-01_6
+  - first:
+      213: -1256683261843114340
+    second: tankdui-01_7
+  - first:
+      213: -3354898650671172631
+    second: tankdui-01_8
+  - first:
+      213: 181525988882281762
+    second: tankdui-01_9
+  - first:
+      213: -4075034801452258557
+    second: tankdui-01_10
+  - first:
+      213: 8112651997449491303
+    second: tankdui-01_11
+  - first:
+      213: -3307296918726125012
+    second: tankdui-01_12
+  - first:
+      213: -2254352108359246791
+    second: tankdui-01_13
+  - first:
+      213: 6295113021368913311
+    second: tankdui-01_14
+  - first:
+      213: 2347580983384379879
+    second: tankdui-01_15
+  - first:
+      213: -7997584778711948865
+    second: tankdui-01_16
+  - first:
+      213: -4781011868369970403
+    second: tankdui-01_17
+  - first:
+      213: 7815462693404394849
+    second: tankdui-01_18
+  - first:
+      213: -2906051464450551169
+    second: tankdui-01_19
+  - first:
+      213: -1644869657244874761
+    second: tankdui-01_20
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tankdui-01_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1866
+        width: 269
+        height: 268
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c45a6c9b81c5f68e0800000000000000
+      internalID: -1698037273229613748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_1
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 1895
+        width: 503
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 651e1a74852563110800000000000000
+      internalID: 1240269286499541334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_2
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 1901
+        width: 488
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 50, y: 50, z: 50, w: 50}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: facb819383c452200800000000000000
+      internalID: 154613566573952175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_3
+      rect:
+        serializedVersion: 2
+        x: 1453
+        y: 1888
+        width: 268
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea73b0cdab520cfe0800000000000000
+      internalID: -1170894418630461522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_4
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1711
+        width: 391
+        height: 145
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 70, y: 70, z: 70, w: 70}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9be57fbbf03b8f0800000000000000
+      internalID: -526059431488734741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_5
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 1699
+        width: 163
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83590377e9b947080800000000000000
+      internalID: -9190549834649529032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_6
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 1399
+        width: 279
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f2750b38763be850800000000000000
+      internalID: 6407274784878850804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_7
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 1433
+        width: 500
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9679a64b3d5f8ee0800000000000000
+      internalID: -1256683261843114340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_8
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 1162
+        width: 730
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e3be45c3710171d0800000000000000
+      internalID: -3354898650671172631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_9
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 925
+        width: 730
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 50, y: 50, z: 50, w: 50}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22574d4dce8e48200800000000000000
+      internalID: 181525988882281762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_10
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 449
+        width: 288
+        height: 287
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30b651440719277c0800000000000000
+      internalID: -4075034801452258557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_11
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 463
+        width: 278
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 763175e420ee59070800000000000000
+      internalID: 8112651997449491303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_12
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 470
+        width: 286
+        height: 288
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2ad598a9fe1a12d0800000000000000
+      internalID: -3307296918726125012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_13
+      rect:
+        serializedVersion: 2
+        x: 1903
+        y: 282
+        width: 201
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93c189693bee6b0e0800000000000000
+      internalID: -2254352108359246791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_14
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 260
+        width: 399
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 80, y: 70, z: 80, w: 70}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9d41a3a0fbbc5750800000000000000
+      internalID: 6295113021368913311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_15
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 269
+        width: 107
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e196146778449020800000000000000
+      internalID: 2347580983384379879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_16
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 249
+        width: 496
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 40, y: 40, z: 40, w: 40}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb1adcb440fd20190800000000000000
+      internalID: -7997584778711948865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_17
+      rect:
+        serializedVersion: 2
+        x: 1441
+        y: 7
+        width: 441
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1b91ee590f66adb0800000000000000
+      internalID: -4781011868369970403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_18
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 0
+        width: 748
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 50, y: 50, z: 50, w: 50}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 165cfab59e9167c60800000000000000
+      internalID: 7815462693404394849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tankdui-01_19
+      rect:
+        serializedVersion: 2
+        x: 1899
+        y: 36
+        width: 205
+        height: 202
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f72db6a0791aba7d0800000000000000
+      internalID: -2906051464450551169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: a6489709fffe142c2b33a7c6fbdcb7e6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

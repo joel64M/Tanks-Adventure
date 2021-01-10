@@ -15,7 +15,7 @@ MonoBehaviour:
   leftCharacter: {fileID: 11400000, guid: 6ef99bf0625004fbc9e66932db9a1814, type: 2}
   rightCharacter: {fileID: 11400000, guid: 68ba94e25dd544951a67c8aba28f9c31, type: 2}
   dialogueLines:
-  - character: {fileID: 11400000, guid: 6ef99bf0625004fbc9e66932db9a1814, type: 2}
-    characterDialogue: hey what happened?
   - character: {fileID: 11400000, guid: 68ba94e25dd544951a67c8aba28f9c31, type: 2}
-    characterDialogue: save everyone please!
+    characterDialogue: Help! Defeat the red nation and save everyone!
+  - character: {fileID: 11400000, guid: 6ef99bf0625004fbc9e66932db9a1814, type: 2}
+    characterDialogue: Yes Sir! Yes!

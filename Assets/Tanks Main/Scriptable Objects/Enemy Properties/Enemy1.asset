@@ -16,7 +16,7 @@ MonoBehaviour:
   minStoppingDist: 5
   attackRadius: 20
   startDecisionForNextPointTime: 1
-  fireRate: 0.2
+  fireRate: 0.4
   maxSpeed: 10
   doubleMissile: 0
   startHealth: 100

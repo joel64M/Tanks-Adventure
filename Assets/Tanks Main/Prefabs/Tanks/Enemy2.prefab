@@ -23874,8 +23874,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4719623262895080792}
   m_LocalRotation: {x: -0.65880466, y: 0.2568577, z: 0.2568572, w: 0.6588058}
-  m_LocalPosition: {x: -1.5, y: 0.5, z: -1.7}
-  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: -0.79967, y: 0.5, z: -1.7}
+  m_LocalScale: {x: 0.53311, y: 0.53311, z: 0}
   m_Children: []
   m_Father: {fileID: 4719623263682690318}
   m_RootOrder: 2
@@ -24132,8 +24132,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2.5
-      minScalar: 0.5
+      scalar: 1.25
+      minScalar: 0.25
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -28891,7 +28891,7 @@ MonoBehaviour:
   firePoint2: {fileID: 2667499984846983151}
   turretDegPerSecSpeed: 9999
   missileFireRate: 0.25
-  missileShell: {fileID: 7815384675602941738, guid: d304936e364b047f8b6ab524746cbfc2,
+  missileShell: {fileID: 7815384675602941738, guid: 123deb70503a14b6cb4632b95917723a,
     type: 3}
   fireAudio: {fileID: 4719623263682690309}
   fireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
@@ -28950,6 +28950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyProperty: {fileID: 11400000, guid: 4718a8decb51b4efb8125eaf34b45260, type: 2}
   target: {fileID: 0}
+  destPos: {x: 0, y: 0, z: 0}
 --- !u!195 &1145967281
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29014,8 +29015,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4719623263713876671}
   m_LocalRotation: {x: -0.65880466, y: 0.2568577, z: 0.2568572, w: 0.6588058}
-  m_LocalPosition: {x: 1.5, y: 0.5, z: -1.7}
-  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: 0.79967, y: 0.5, z: -1.7}
+  m_LocalScale: {x: 0.53311, y: 0.53311, z: 0}
   m_Children: []
   m_Father: {fileID: 4719623263682690318}
   m_RootOrder: 3
@@ -29272,8 +29273,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2.5
-      minScalar: 0.5
+      scalar: 1.25
+      minScalar: 0.25
       maxCurve:
         serializedVersion: 2
         m_Curve:

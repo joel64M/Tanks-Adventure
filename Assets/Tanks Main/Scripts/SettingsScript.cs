@@ -34,10 +34,6 @@ namespace NameSpaceName {
             }
         }
      
-        void OnEnable()
-        {
-
-        }
 
         void Start()
         {
@@ -51,30 +47,6 @@ namespace NameSpaceName {
             SetResolution(settings.resolutionPercentage);
         }
 
-        void Update()
-        {
-            
-        }
-
-        void FixedUpdate()
-        {
-            
-        }
-
-        void LateUpdate()
-        {
-
-        }
-
-        void OnDisable()
-        {
-
-        }
-
-        void Destroy()
-        {
-
-        }
 
     #endregion
 

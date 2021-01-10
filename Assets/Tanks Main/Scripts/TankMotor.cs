@@ -111,7 +111,8 @@ namespace NameSpaceName {
                 {
                     movementAudioSource.clip = engineIdle;
                     movementAudioSource.pitch = originalPitch;  // Random.Range(originalPitch - pitchRange, originalPitch + pitchRange);
-                 //   movementAudioSource.Play();
+                                                                //   movementAudioSource.Play();
+                    movementAudioSource.volume = 0;
                 }
             }
             else
@@ -120,6 +121,7 @@ namespace NameSpaceName {
                 {
                     movementAudioSource.clip = engineRunning;
                     movementAudioSource.pitch = originalPitch + addPitch; //Random.Range(originalPitch - pitchRange, originalPitch + pitchRange);
+                    movementAudioSource.volume = 0.1f;
                     movementAudioSource.Play();
                 }
             }

@@ -17,7 +17,6 @@ namespace NameSpaceName {
         public event Action<float,float> HealthChangedAction;
         public event Action TankDestroyedAction;
 
-        [Header("Explosion Components")]
         public Transform explosionTransform;
          ParticleSystem tankExplosionParticles;
         public AudioSource explosionAudioSource;
@@ -39,36 +38,7 @@ namespace NameSpaceName {
             tankExplosionParticles.transform.localPosition = Vector3.zero;
         }
 
-        void Start()
-        {
-            
-        }
-
-        void Update()
-        {
-           
-        }
-
-        void FixedUpdate()
-        {
-            
-        }
-
-        void LateUpdate()
-        {
-
-        }
-
-        void OnDisable()
-        {
-
-        }
-
-        void Destroy()
-        {
-
-        }
-
+        
 
 
         #endregion
@@ -78,13 +48,25 @@ namespace NameSpaceName {
         {
             currentHealth = startingHealth = startHealth;
         }
-        public void TakeDamage(float damage)
+        public void ResestHealth()
+        {
+			gameObject.SetActive(true);
+			currentHealth = startingHealth;
+			HealthChangedAction?.Invoke(currentHealth, startingHealth);
+			isDead = false;
+            tankExplosionParticles.transform.gameObject.SetActive(false);
+            tankExplosionParticles.transform.SetParent(this.gameObject.transform);// = this.gameObject;
+            explosionDecalTransform.transform.SetParent(this.gameObject.transform);
+
+
+		}
+		public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            if (currentHealth <= 0)
-            {
-                TankDestroyedAction?.Invoke();
-                OnDeath();
+            if (currentHealth <= 0 && !isDead)
+			{
+				OnDeath();
+				TankDestroyedAction?.Invoke();
             }
             HealthChangedAction?.Invoke(currentHealth, startingHealth);
         }
@@ -99,7 +81,8 @@ namespace NameSpaceName {
 
         void OnDeath()
         {
-            isDead = true;
+
+			isDead = true;
             tankExplosionParticles.transform.parent = null;
             tankExplosionParticles.gameObject.SetActive(true);
             tankExplosionParticles.Play();

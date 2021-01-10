@@ -27,13 +27,16 @@ namespace NameSpaceName {
 
         void Awake()
         {
+            levelNo = int.Parse(SceneManager.GetActiveScene().name);
+        
             playerTankHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<TankHealth>();
             enemyHealths = FindObjectsOfType<TankHealth>().ToList();
             enemyHealths.Remove(playerTankHealth);
             enemyCount = enemyHealths.Count;
-            levelNo = int.Parse(SceneManager.GetActiveScene().name);
             allas = FindObjectsOfType<AudioSource>() ;
-          // NavMeshBuilder.BuildNavMesh();
+            // NavMeshBuilder.BuildNavMesh();
+            //Time.timeScale = 0;
+
         }
 
         void OnEnable()
@@ -48,9 +51,13 @@ namespace NameSpaceName {
 
         void Start()
         {
-           SetGameState(GAMESTATE.play);
-            SdkScript.instance.OnGameStartUA(levelNo);
-            SdkScript.instance.LogLevelStartedEventFB(levelNo);
+            //  SetGameState(GAMESTATE.play);
+
+            if (SdkScript.instance != null)
+            {
+                SdkScript.instance.OnGameStartUA(levelNo);
+                SdkScript.instance.LogLevelStartedEventFB(levelNo);
+            }
         }
 
         void OnDisable()
@@ -82,24 +89,35 @@ namespace NameSpaceName {
         void OnLevelFailed()
         {
             Invoke("OnLevelFailedDelay", 1.5f);
-            SdkScript.instance.OnGameOverUA(levelNo);
-            SdkScript.instance.LogLevelFailedEventFB(levelNo);
+
+            if (SdkScript.instance != null)
+            {
+                SdkScript.instance.OnGameOverUA(levelNo);
+                SdkScript.instance.LogLevelFailedEventFB(levelNo);
+            }
+     
         }
         void OnLevelFailedDelay()
         {
+            Time.timeScale = 0;
+            //("OnLevelFailedDelay");
             SetGameState(GAMESTATE.levelFailed);
 
         }
         private void OnLevelComplete()
         {
             Invoke("OnLevelCompleteDelay", 1.5f);
-            SdkScript.instance.OnGameCompleteUA(levelNo);
-            SdkScript.instance.LogLevelCompleteEventFB(levelNo);
+            if (SdkScript.instance != null)
+            {
+                SdkScript.instance.OnGameCompleteUA(levelNo);
+                SdkScript.instance.LogLevelCompleteEventFB(levelNo);
+            }
         }
         void OnLevelCompleteDelay()
         {
             SetGameState(GAMESTATE.levelComplete);
         }
+    
         private void OnGameStateChanged(GAMESTATE gs)
         {
             CurrentGameState = gs;
@@ -117,6 +135,7 @@ namespace NameSpaceName {
                 foreach (AudioSource ad in allas)
                 {
                     ad.enabled = true;
+                   
 
                 }
             }
@@ -141,25 +160,67 @@ namespace NameSpaceName {
         //Scene Management
         public void RestartLevel()
         {
-            SdkScript.instance.OnGameRestartUA(levelNo);
-            SdkScript.instance.LogLevelRestartedEventFB(levelNo);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-        public void GoToNextLevel()
-        {
-            if(Application.CanStreamedLevelBeLoaded(SceneManager.GetActiveScene().buildIndex + 1))
+           
+            if (SdkScript.instance != null)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SdkScript.instance.OnGameRestartUA(levelNo);
+               SdkScript.instance.LogLevelRestartedEventFB(levelNo);
+            }
+            if(TransitionCanvasScript.instance != null)
+            {
+                TransitionCanvasScript.instance.TransitionToNextScene(SceneManager.GetActiveScene().buildIndex);
             }
             else
             {
-                SceneManager.LoadScene("Menu");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+        }
+    
+        public void GoToNextLevel()
+        {
+            if (levelNo > 1 && levelNo % 3 == 0)
+            {
+                if (Advertisements.Instance.IsInterstitialAvailable())
+                {
+                    Advertisements.Instance.ShowInterstitial();
+                }
+            }
+            if (TransitionCanvasScript.instance != null)
+            {
+                if (Application.CanStreamedLevelBeLoaded(SceneManager.GetActiveScene().buildIndex + 1))
+                {
+                    TransitionCanvasScript.instance.TransitionToNextScene(SceneManager.GetActiveScene().buildIndex+1);
+                }
+                else
+                {
+                   // SceneManager.LoadScene("Menu");
+                    TransitionCanvasScript.instance.TransitionToNextScene(0);
+                }
+            }
+            else
+            {
+                if (Application.CanStreamedLevelBeLoaded(SceneManager.GetActiveScene().buildIndex + 1))
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+                else
+                {
+                    SceneManager.LoadScene("Menu");
+                }
+            }
+       
         }
         public void GoToMainMenu()
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene("menu");
+            if (TransitionCanvasScript.instance != null)
+            {
+                TransitionCanvasScript.instance.TransitionToNextScene(0);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
         }
         #endregion
 

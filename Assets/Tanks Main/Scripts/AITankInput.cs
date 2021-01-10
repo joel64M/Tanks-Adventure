@@ -10,12 +10,11 @@ namespace NameSpaceName {
 
         #region Variables
          float distbtwn;
-
         public Transform target;
          Vector3 min,max;
         NavMeshAgent agent;
 
-        Vector3 destPos;
+      [SerializeField ] Vector3 destPos;
 
        // [Header("Adjustable AI Properties")]
          float minDisToPatrol = 5f;
@@ -26,7 +25,8 @@ namespace NameSpaceName {
 
         float decisionForNextPointTime ;
         float fireRateTime;
-        
+        bool pathfound;
+
         STATE currentState = STATE.patrol;
       [SerializeField]  [Flags]public enum STATE { patrol, retreat, atttack ,alert }
     #endregion
@@ -149,28 +149,44 @@ namespace NameSpaceName {
                     FirePos = Vector3.zero;
                     decisionForNextPointTime -= Time.deltaTime;
                 }
+
             }
-            else
+            else if(pathfound)
             {
                 //  inputVec = destPos - transform.position;
                 //  inputVec.Normalize();
                 //  HorizontalInputValue = inputVec.x;
                 //  VerticalInputValue = inputVec.z;
                 agent.SetDestination(destPos);
+
+                pathfound = false;
             }
         }
-      
         Vector3 FindRandomPos()
         {
             Vector3 temp = new Vector3(UnityEngine.Random.Range(min.x, max.x), 0, UnityEngine.Random.Range(min.z, max.z));
-            if (Vector3.Distance(transform.position, temp) < minDisToPatrol)
+           NavMeshPath navMeshPath = new NavMeshPath();
+
+            if (NavMesh.SamplePosition(temp, out NavMeshHit hit , 1f,NavMesh.AllAreas) && agent.CalculatePath(temp, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
             {
-               return FindRandomPos();
+                if (Vector3.Distance(transform.position, temp) < minDisToPatrol)
+                {
+
+                    return FindRandomPos();
+
+                }
+                else
+                {
+
+                    pathfound = true;
+                    return temp;
+                }
             }
             else
             {
-                return temp;
+                return FindRandomPos();
             }
+
         }
     #endregion
 

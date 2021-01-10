@@ -13,13 +13,14 @@ namespace NameSpaceName
 
         #region Variables
         int currentLevel;
+        public bool isRewardedAdAvailable;
+        public bool isInterstialAdAvailable;
         #endregion
 
         #region Builtin Methods
 
         void Awake()
         {
-
             if (instance != null && instance != this)
             {
                 Destroy(this.gameObject);
@@ -31,7 +32,7 @@ namespace NameSpaceName
                 {
                     FB.Init(InitCallback);
                 }
-                Debug.Log("starting from  " + PlayerPrefs.GetInt("LEVEL").ToString());
+               // Debug.Log("starting from  " + PlayerPrefs.GetInt("LEVEL").ToString());
                
                 instance = this;
                 DontDestroyOnLoad(this.gameObject);
@@ -42,16 +43,19 @@ namespace NameSpaceName
         {
             if (instance == this)
             {
-                if(level == 0)
+                if(level == 11)
                 {
-
+                    OnGameLevelReachedUA(level);
+                    LogGameLevelReachedEventFB(level);
                 }
-                currentLevel = int.Parse(SceneManager.GetActiveScene().name);
+                if (SceneManager.GetActiveScene().buildIndex > 0)
+                    currentLevel = int.Parse(SceneManager.GetActiveScene().name);
+                else
+                    currentLevel = 0;
             }
         }
     
-   
-
+  
         #endregion
 
         #region Custom Methods
@@ -93,80 +97,148 @@ namespace NameSpaceName
         #region facebook funnels events
         public void LogLevelStartedEventFB(int levelNumber)
         {
-            var parameters = new Dictionary<string, object>();
-            double valToSum = (double)levelNumber;
-            parameters["LevelNumber"] = levelNumber;
-            FB.LogAppEvent(
-                "Level Start1",
-                (float)valToSum,
-                parameters
-            );
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+                double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "Level Start1",
+                    (float)valToSum,
+                    parameters
+                );
+            }
+        
         }
         public void LogLevelCompleteEventFB(int levelNumber)
         {
-            var parameters = new Dictionary<string, object>();
-            double valToSum = (double)levelNumber;
-            parameters["LevelNumber"] = levelNumber;
-            FB.LogAppEvent(
-                "Level Complete1",
-                (float)valToSum,
-                parameters
-            );
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+                double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "Level Complete1",
+                    (float)valToSum,
+                    parameters
+                );
+            }
         }
        public void LogLevelFailedEventFB(int levelNumber)
         {
-            var parameters = new Dictionary<string, object>();
-            double valToSum = (double)levelNumber;
-            parameters["LevelNumber"] = levelNumber;
-            FB.LogAppEvent(
-                "Level Failed1",
-                (float)valToSum,
-                parameters
-            );
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+                double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "Level Failed1",
+                    (float)valToSum,
+                    parameters
+                );
+            }
         }
         public void LogLevelRestartedEventFB(int levelNumber)
         {
-            var parameters = new Dictionary<string, object>();
-            double valToSum = (double)levelNumber;
-            parameters["LevelNumber"] = levelNumber;
-            FB.LogAppEvent(
-                "Level Restarted1",
-                (float)valToSum,
-                parameters
-            );
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+                double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "Level Restarted1",
+                    (float)valToSum,
+                    parameters
+                );
+            }
         }
         public void LogGameExitedEventFB(int levelNumber)
         {
-            var parameters = new Dictionary<string, object>();
-            double valToSum = (double)levelNumber;
-            parameters["LevelNumber"] = levelNumber;
-            FB.LogAppEvent(
-                "Game Exited1",
-                (float)valToSum,
-                parameters
-            );
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+                double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "Game Exited1",
+                    (float)valToSum,
+                    parameters
+                );
+            }
         }
         public void LogGamePausedEventFB(int levelNumber)
         {
-            var parameters = new Dictionary<string, object>();
-            double valToSum = (double)levelNumber;
-            parameters["LevelNumber"] = levelNumber;
-            FB.LogAppEvent(
-                "Game Paused1",
-                (float)valToSum,
-                parameters
-            );
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+                double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "Game Paused1",
+                    (float)valToSum,
+                    parameters
+                );
+            }
         }
         public void LogGameStartupEventFB(int levelNumber)
         {
-            var parameters = new Dictionary<string, object>();
-            double valToSum = (double)levelNumber;
-            parameters["LevelNumber"] = levelNumber;
-            FB.LogAppEvent(
-                "Game Startup1",
-                (float)valToSum,
-                parameters
-            );
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+                double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "Game Startup1",
+                    (float)valToSum,
+                    parameters
+                );
+            }
+        }
+        public void LogGameLevelReachedEventFB(int levelNumber)
+        {
+            if (!FB.IsInitialized)
+            {
+                FB.Init(InitCallback);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>();
+               double valToSum = (double)levelNumber;
+                parameters["LevelNumber"] = levelNumber;
+                FB.LogAppEvent(
+                    "level  reached " + levelNumber.ToString() + " " ,
+                    (float)valToSum,
+                    parameters
+                );
+            }
         }
         #endregion
 
@@ -230,6 +302,16 @@ namespace NameSpaceName
             Analytics.CustomEvent("gameStartup1", new Dictionary<string, object>
             {
                  {"Level ", level}
+
+            });
+        }
+
+        public void OnGameLevelReachedUA(int level)
+        {
+
+            Analytics.CustomEvent("Level Reached ", new Dictionary<string, object>
+            {
+                 {"Level reached ", level}
 
             });
         }
